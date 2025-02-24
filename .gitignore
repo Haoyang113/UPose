@@ -1,3 +1,5 @@
 .DS_Store
 /MotionCapture/mmposeavatar/__pycache__
 /MotionCapture/mediapipeavatar/__pycache__
+/MotionCapture/mediapipe/__pycache__
+/MotionCapture/mmpose/__pycache__
