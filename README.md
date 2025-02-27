@@ -33,6 +33,9 @@ Brief desciption and screenshot
 ### Demo 4 - Hitting Targets
 Brief desciption and screenshot
 
+### Demo 5 - Interactive Waterfall
+Brief description and screenshot
+
 ## Credits
 
 ### Assets
