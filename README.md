@@ -12,6 +12,29 @@ In addition to installing Unity and Python, please refer to the installation gui
 ## Installation
 
 ### MediaPipe
+The mediapipe tracking works in Python. It is recomended you install miniconda, a minimal version of Anaconda, in order to keep the python setup of this project separate from other python installations in your computer. https://www.anaconda.com/docs/getting-started/miniconda/install
+
+You can verify your miniconda installation by:
+```
+conda --version
+```
+
+Then you can create a new environment for the mediapipe setup:
+```
+conda create -n mediapipe python=3.9
+conda activate mediapipe
+```
+
+Then you can install the dependencies of this project:
+```
+pip install opencv-python mediapipe
+```
+
+Finally you can run mediapipe by:
+```
+python main.py
+```
+This program will attempt to connect to Unity and stream the motion capture data to your Unity Project. Keep the python program running and start the UPose Unity project to see the motion capture data in action!
 
 ### MMPose
 ```
