@@ -3,7 +3,7 @@ using UnityEngine;
 using GLTFast;
 using System.Linq;
 
-public class Avatar : MonoBehaviour
+public class GLTFAvatar : MonoBehaviour
 {
 
     private MotionTracking server;
@@ -24,7 +24,7 @@ public class Avatar : MonoBehaviour
     private void Start()
     {
 
-        server = FindObjectOfType<MotionTracking>();
+        server = FindFirstObjectByType<MotionTracking>();
         if (server == null)
         {
             Debug.LogError("You must have a Pipeserver in the scene!");
@@ -68,21 +68,59 @@ public class Avatar : MonoBehaviour
 
     private void Update()
     {
-        
+        if(!AVATAR_LOADED)return;
+
+        //Get pelvis local rotation and apply it to the avatar
         Hips.localRotation=server.GetRotation(Landmark.PELVIS);
         
+        //Get torso local rotation and apply it to the avatar
         Spine.localRotation=server.GetRotation(Landmark.SHOULDER_CENTER);
        
-        
+        //Get right upper arm rotation and apply it to the avatar
         RightArm.localRotation=server.GetRotation(Landmark.RIGHT_SHOULDER);
+        //Modify the coordinate system if necessary according to your avatar
         RightArm.Rotate(0,90,0);
         Vector3 angles=RightArm.localRotation.eulerAngles;
         RightArm.localRotation = Quaternion.Euler(90-angles.y, angles.z,-angles.x);
         
+        //Get left upper arm rotation and apply it to the avatar
         LeftArm.localRotation=server.GetRotation(Landmark.LEFT_SHOULDER);
+        //Modify the coordinate system if necessary according to your avatar        
         LeftArm.Rotate(0,-90,0);
         angles=LeftArm.localRotation.eulerAngles;
         LeftArm.localRotation = Quaternion.Euler(-90-angles.y, 0,-angles.x);
+
+        //Get left fore arm rotation and apply it to the avatar
+        LeftForeArm.localRotation=server.GetRotation(Landmark.LEFT_ELBOW);
+        //Modify the coordinate system if necessary according to your avatar
+        angles=LeftForeArm.localRotation.eulerAngles;
+        LeftForeArm.localRotation = Quaternion.Euler(-angles.y, 0,0);
+
+        //Get right fore arm rotation and apply it to the avatar
+        RightForeArm.localRotation=server.GetRotation(Landmark.RIGHT_ELBOW);
+        //Modify the coordinate system if necessary according to your avatar
+        angles=RightForeArm.localRotation.eulerAngles;
+        RightForeArm.localRotation = Quaternion.Euler(-angles.y, 0,0);
+
+
+        //Get right thigh arm rotation and apply it to the avatar  
+        RightUpLeg.localRotation=server.GetRotation(Landmark.RIGHT_HIP);
+        //Modify the coordinate system if necessary according to your avatar
+        angles=RightUpLeg.localRotation.eulerAngles;
+        RightUpLeg.localRotation = Quaternion.Euler(-180+angles.x, angles.y,-angles.z); 
+        
+        //Get left thigh rotation and apply it to the avatar
+        LeftUpLeg.localRotation=server.GetRotation(Landmark.LEFT_HIP);
+        //Modify the coordinate system if necessary according to your avatar
+        angles=LeftUpLeg.localRotation.eulerAngles;
+        LeftUpLeg.localRotation = Quaternion.Euler(-180+angles.x, angles.y,-angles.z);    
+        
+        //Get left leg rotation and apply it to the avatar
+        LeftLeg.localRotation=server.GetRotation(Landmark.LEFT_KNEE);
+        //Get right leg rotation and apply it to the avatar
+        RightLeg.localRotation=server.GetRotation(Landmark.RIGHT_KNEE);
+
+
 
         /*LeftForeArm.localRotation=Quaternion.Inverse(server.GetLandmark(Landmark.LEFT_SHOULDER).localRotation)*server.GetLandmark(Landmark.LEFT_ELBOW).localRotation;
         angles =LeftForeArm.localRotation.eulerAngles;
@@ -92,26 +130,6 @@ public class Avatar : MonoBehaviour
         angles =RightForeArm.localRotation.eulerAngles;
         RightForeArm.localRotation = Quaternion.Euler(-180-server.getRightElbowAngle(), 0, 0); ;
         */
-
-        LeftForeArm.localRotation=server.GetRotation(Landmark.LEFT_ELBOW);
-        angles=LeftForeArm.localRotation.eulerAngles;
-        LeftForeArm.localRotation = Quaternion.Euler(-angles.y, 0,0);
-
-        RightForeArm.localRotation=server.GetRotation(Landmark.RIGHT_ELBOW);
-        angles=RightForeArm.localRotation.eulerAngles;
-        RightForeArm.localRotation = Quaternion.Euler(-angles.y, 0,0);
-
-
-        RightUpLeg.localRotation=server.GetRotation(Landmark.RIGHT_HIP);
-        angles=RightUpLeg.localRotation.eulerAngles;
-        RightUpLeg.localRotation = Quaternion.Euler(-180+angles.x, angles.y,-angles.z); 
-        
-        LeftUpLeg.localRotation=server.GetRotation(Landmark.LEFT_HIP);
-        angles=LeftUpLeg.localRotation.eulerAngles;
-        LeftUpLeg.localRotation = Quaternion.Euler(-180+angles.x, angles.y,-angles.z);    
-        
-        LeftLeg.localRotation=server.GetRotation(Landmark.LEFT_KNEE);
-        RightLeg.localRotation=server.GetRotation(Landmark.RIGHT_KNEE);
     }
 
 }

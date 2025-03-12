@@ -472,7 +472,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   host: 127.0.0.1
   port: 52733
-  linePrefab: {fileID: 6873139827369952066, guid: a5b46d377e3b24b528d99e105de9e49d, type: 3}
   multiplier: 10
   landmarkScale: 1
   MMPose: 0
@@ -487,7 +486,7 @@ GameObject:
   - component: {fileID: 992788409}
   - component: {fileID: 992788408}
   m_Layer: 0
-  m_Name: Avatar3
+  m_Name: Avatar Front Mirrored
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -515,7 +514,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: -0.7071068, w: 0}
   m_LocalPosition: {x: -1, y: 0, z: 2}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: -1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -531,7 +530,7 @@ GameObject:
   - component: {fileID: 1053062280}
   - component: {fileID: 1053062279}
   m_Layer: 0
-  m_Name: Avatar1
+  m_Name: Avatar Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -575,7 +574,7 @@ GameObject:
   - component: {fileID: 1610239267}
   - component: {fileID: 1610239266}
   m_Layer: 0
-  m_Name: Avatar2
+  m_Name: Avatar Front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
