@@ -64,3 +64,4 @@ Brief description and screenshot
 ### Assets
 Solder.glb - Imported from Three.js (MIT License) https://github.com/mrdoob/three.js/blob/dev/examples/models/gltf/Soldier.glb
 White_M_1_Default.glb - Imported from VALID (MIT License) https://github.com/c-frame/valid-avatars-glb/blob/main/avatars/White/White_M_1_Default.glb
+https://github.com/Surbh77/AI-teacher/blob/main/avatar.glb
