@@ -36,7 +36,7 @@ public class GLTFAvatar : MonoBehaviour
 
     private async void InitializeAvatar(){
         var gltfImport = new GltfImport();
-        await gltfImport.Load("https://digitalworlds.github.io/UPose/Assets/Soldier.glb");
+        await gltfImport.Load("https://digitalworlds.github.io/UPose/Assets/67d411b30787acbf58ce58ac.glb");
         var instantiator = new GameObjectInstantiator(gltfImport,transform);
         var success = await gltfImport.InstantiateMainSceneAsync(instantiator);
         if (success) {

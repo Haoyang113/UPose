@@ -77,6 +77,23 @@ public class MotionTracking : MonoBehaviour
         b.instances[(int)Landmark.PELVIS].transform.localRotation=Quaternion.Euler(0,-signedAngle,0);
     }
     
+
+    private void CalculateTorsoRotation(Body b)
+    {
+        Vector3 p1=b.instances[(int)Landmark.PELVIS].transform.localPosition;
+        Vector3 p2=b.instances[(int)Landmark.SHOULDER_CENTER].transform.localPosition;
+        Quaternion base_rotation=b.instances[(int)Landmark.PELVIS].transform.localRotation;
+
+        Vector3 direction = (p2 - p1).normalized;
+        Vector3 localDirection = Quaternion.Inverse(base_rotation) * direction;
+        float rotZ = Mathf.Asin(-localDirection.x) * Mathf.Rad2Deg;
+        float rotX = Mathf.Atan2(localDirection.z, localDirection.y) * Mathf.Rad2Deg;
+    
+        b.instances[(int)Landmark.SHOULDER_CENTER].transform.localRotation = base_rotation*Quaternion.Euler(rotX,0,rotZ);
+
+    }
+
+
     private void CalculateRotationShoulder(Body b, int bone1, int bone2, int base_bone)
     {
         Vector3 p1=b.instances[bone1].transform.localPosition;
@@ -85,13 +102,25 @@ public class MotionTracking : MonoBehaviour
 
         Vector3 direction = (p2 - p1).normalized;
         
-        Quaternion newRotation = Quaternion.LookRotation(direction, base_rotation * Vector3.up);
+        Vector3 localDirection = Quaternion.Inverse(base_rotation) * direction;
 
-        // Apply the modified rotation
-        b.instances[bone1].transform.localRotation = newRotation;
+        //Right Shoulder
+        //float rotZ=-Mathf.Acos(localDirection.y)*Mathf.Rad2Deg;
+        //float rotY=Mathf.Atan2(-localDirection.z,localDirection.x)*Mathf.Rad2Deg;
+        //b.instances[bone1].transform.localRotation = base_rotation*Quaternion.Euler(0,rotY,rotZ);
+        //Left Shoulder
+        //float rotZ=Mathf.Acos(localDirection.y)*Mathf.Rad2Deg;
+        //float rotY=Mathf.Atan2(localDirection.z,-localDirection.x)*Mathf.Rad2Deg;
+        //b.instances[bone1].transform.localRotation = base_rotation*Quaternion.Euler(0,rotY,rotZ);
+
+
+        float rotZ = Mathf.Asin(-localDirection.x) * Mathf.Rad2Deg;
+        float rotX = Mathf.Atan2(localDirection.z, localDirection.y) * Mathf.Rad2Deg;
+        b.instances[bone1].transform.localRotation = base_rotation*Quaternion.Euler(rotX,0,rotZ);
+ 
     }
 
-    private void CalculateRotationShoulderRight(Body b, int bone1, int bone2, int base_bone)
+    private void CalculateRotationElbow(Body b, int bone1, int bone2, int base_bone)
     {
         Vector3 p1=b.instances[bone1].transform.localPosition;
         Vector3 p2=b.instances[bone2].transform.localPosition;
@@ -99,47 +128,13 @@ public class MotionTracking : MonoBehaviour
 
         Vector3 direction = (p2 - p1).normalized;
         
-        // Project direction into base_rotation's coordinate system
         Vector3 localDirection = Quaternion.Inverse(base_rotation) * direction;
-
         
+        float rotZ = Mathf.Asin(-localDirection.x) * Mathf.Rad2Deg;
+        float rotX = Mathf.Atan2(localDirection.z, localDirection.y) * Mathf.Rad2Deg;
+        b.instances[bone1].transform.localRotation = base_rotation*Quaternion.Euler(rotX,0,rotZ);
+ 
 
-        Vector3 directionXY = new Vector3(localDirection.x,localDirection.y, 0).normalized;
-        float rotZ = Vector3.SignedAngle(directionXY, Vector3.right, Vector3.back);
-
-        localDirection=Quaternion.Euler(0,0,-rotZ)*localDirection;
-        
-        Vector3 directionXZ = new Vector3(localDirection.x,0,localDirection.z).normalized;
-        float rotY = Vector3.SignedAngle(directionXZ, Vector3.right, Vector3.down);
-
-        // Apply the modified rotation
-        b.instances[bone1].transform.localRotation = base_rotation*Quaternion.Euler(0,rotY,rotZ);
-    }
-
-    private void CalculateRotationShoulderLeft(Body b, int bone1, int bone2, int base_bone)
-    {
-        Vector3 p1=b.instances[bone1].transform.localPosition;
-        Vector3 p2=b.instances[bone2].transform.localPosition;
-        Quaternion base_rotation=b.instances[base_bone].transform.localRotation;
-
-        Vector3 direction = (p2 - p1).normalized;
-        
-        // Project direction into base_rotation's coordinate system
-        Vector3 localDirection = Quaternion.Inverse(base_rotation) * direction;
-
-        
-
-        Vector3 directionXY = new Vector3(localDirection.x,localDirection.y, 0).normalized;
-        float rotZ = Vector3.SignedAngle(directionXY, Vector3.left, Vector3.back);
-
-        localDirection=Quaternion.Euler(0,0,-rotZ)*localDirection;
-        
-
-        Vector3 directionXZ = new Vector3(localDirection.x,0,localDirection.z).normalized;
-        float rotY = Vector3.SignedAngle(directionXZ, Vector3.left, Vector3.down);
-
-        // Apply the modified rotation
-        b.instances[bone1].transform.localRotation = base_rotation*Quaternion.Euler(0,rotY,rotZ);
     }
 
     private void CalculateRotationThigh(Body b, int bone1, int bone2, int base_bone)
@@ -150,148 +145,63 @@ public class MotionTracking : MonoBehaviour
 
         Vector3 direction = (p2 - p1).normalized;
         
-        // Project direction into base_rotation's coordinate system
         Vector3 localDirection = Quaternion.Inverse(base_rotation) * direction;
-
         
-
-        Vector3 directionYZ = new Vector3(0,localDirection.y, localDirection.z).normalized;
-        float rotX = Vector3.SignedAngle(directionYZ, Vector3.down, Vector3.left);
-
-        localDirection=Quaternion.Euler(-rotX,0,0)*localDirection;
-
-        Vector3 directionXY = new Vector3(localDirection.x,localDirection.y, 0).normalized;
-        float rotZ = Vector3.SignedAngle(directionXY, Vector3.down, Vector3.back);
-
-        // Apply the modified rotation
+        float rotZ = 180+Mathf.Asin(localDirection.x) * Mathf.Rad2Deg;
+        float rotX = Mathf.Atan2(-localDirection.z, -localDirection.y) * Mathf.Rad2Deg;
         b.instances[bone1].transform.localRotation = base_rotation*Quaternion.Euler(rotX,0,rotZ);
+ 
     }
 
-     private void CalculateRotationKnee(Body b, int bone1, int bone2, int bone3)
+     private void CalculateRotationKnee(Body b, int bone1, int bone2, int base_bone)
     {
         Vector3 p1=b.instances[bone1].transform.localPosition;
         Vector3 p2=b.instances[bone2].transform.localPosition;
-        Vector3 p3=b.instances[bone3].transform.localPosition;
+        Quaternion base_rotation=b.instances[base_bone].transform.localRotation;
 
-        // Compute Y-axis (normalized)
-        Vector3 yAxis = (p1 - p2).normalized;
+        Vector3 direction = (p2 - p1).normalized;
         
-        // Compute X-axis (perpendicular to plane)
-        Vector3 p32 = (p2 - p3).normalized;
-        Vector3 xAxis = Vector3.Cross(yAxis, p32);
+        Vector3 localDirection = Quaternion.Inverse(base_rotation) * direction;
+        
+        float rotZ = Mathf.Asin(-localDirection.x) * Mathf.Rad2Deg;
+        float rotX = Mathf.Atan2(localDirection.z, localDirection.y) * Mathf.Rad2Deg;
+        b.instances[bone1].transform.localRotation = base_rotation*Quaternion.Euler(rotX,0,rotZ);
+ 
 
-        // Compute Z-axis (ensuring right-handed coordinate system)
-        Vector3 zAxis = Vector3.Cross(xAxis, yAxis);
-
-        // Construct rotation matrix
-        Matrix4x4 rotationMatrix = new Matrix4x4();
-        rotationMatrix.SetColumn(0, new Vector4(xAxis.x, xAxis.y, xAxis.z, 0));
-        rotationMatrix.SetColumn(1, new Vector4(yAxis.x, yAxis.y, yAxis.z, 0));
-        rotationMatrix.SetColumn(2, new Vector4(zAxis.x, zAxis.y, zAxis.z, 0));
-        rotationMatrix.SetColumn(3, new Vector4(0, 0, 0, 1)); // Homogeneous coordinate
-        b.instances[bone1].transform.localRotation=rotationMatrix.rotation;
     }
 
 
-    private void CalculateRotationElbowRight(Body b, int bone1, int bone2, int bone3)
-    {
-        Vector3 p1=b.instances[bone1].transform.localPosition;
-        Vector3 p2=b.instances[bone2].transform.localPosition;
-        Vector3 p3=b.instances[bone3].transform.localPosition;
-
-        // Compute X-axis (normalized)
-        Vector3 xAxis = (p2 - p1).normalized;
-        
-        // Compute Y-axis (perpendicular to plane)
-        Vector3 p32 = (p1 - p3).normalized;
-        Vector3 yAxis = Vector3.Cross(xAxis, p32);
-
-        // Compute Z-axis (ensuring right-handed coordinate system)
-        Vector3 zAxis = Vector3.Cross(xAxis, yAxis);
-
-        // Construct rotation matrix
-        Matrix4x4 rotationMatrix = new Matrix4x4();
-        rotationMatrix.SetColumn(0, new Vector4(xAxis.x, xAxis.y, xAxis.z, 0));
-        rotationMatrix.SetColumn(1, new Vector4(yAxis.x, yAxis.y, yAxis.z, 0));
-        rotationMatrix.SetColumn(2, new Vector4(zAxis.x, zAxis.y, zAxis.z, 0));
-        rotationMatrix.SetColumn(3, new Vector4(0, 0, 0, 1)); // Homogeneous coordinate
-        b.instances[bone1].transform.localRotation=rotationMatrix.rotation;
-    }
-
-    private void CalculateRotationElbowLeft(Body b, int bone1, int bone2, int bone3)
-    {
-        Vector3 p1=b.instances[bone1].transform.localPosition;
-        Vector3 p2=b.instances[bone2].transform.localPosition;
-        Vector3 p3=b.instances[bone3].transform.localPosition;
-
-        // Compute X-axis (normalized)
-        Vector3 xAxis = (p1 - p2).normalized;
-        
-        // Compute Y-axis (perpendicular to plane)
-        Vector3 p32 = (p1 - p3).normalized;
-        Vector3 yAxis = Vector3.Cross(xAxis, p32);
-
-        // Compute Z-axis (ensuring right-handed coordinate system)
-        Vector3 zAxis = Vector3.Cross(xAxis, yAxis);
-
-        // Construct rotation matrix
-        Matrix4x4 rotationMatrix = new Matrix4x4();
-        rotationMatrix.SetColumn(0, new Vector4(xAxis.x, xAxis.y, xAxis.z, 0));
-        rotationMatrix.SetColumn(1, new Vector4(yAxis.x, yAxis.y, yAxis.z, 0));
-        rotationMatrix.SetColumn(2, new Vector4(zAxis.x, zAxis.y, zAxis.z, 0));
-        rotationMatrix.SetColumn(3, new Vector4(0, 0, 0, 1)); // Homogeneous coordinate
-        b.instances[bone1].transform.localRotation=rotationMatrix.rotation;
-    }
+    
 
     public float getLeftElbowAngle(){
-        return CalculateElbowAngle(body,(int)Landmark.LEFT_ELBOW,(int)Landmark.LEFT_WRIST,(int)Landmark.LEFT_SHOULDER);
+        return CalculateBodyAngle(body,(int)Landmark.LEFT_ELBOW,(int)Landmark.LEFT_WRIST,(int)Landmark.LEFT_SHOULDER);
     }
 
     public float getRightElbowAngle(){
-        return CalculateElbowAngle(body,(int)Landmark.RIGHT_ELBOW,(int)Landmark.RIGHT_WRIST,(int)Landmark.RIGHT_SHOULDER);
+        return CalculateBodyAngle(body,(int)Landmark.RIGHT_ELBOW,(int)Landmark.RIGHT_WRIST,(int)Landmark.RIGHT_SHOULDER);
     }
 
-    private float CalculateElbowAngle(Body b, int bone1, int bone2, int bone3)
+    public float getLeftKneeAngle(){
+        return CalculateBodyAngle(body,(int)Landmark.LEFT_KNEE,(int)Landmark.LEFT_ANKLE,(int)Landmark.LEFT_HIP);
+    }
+
+    public float getRightKneeAngle(){
+        return CalculateBodyAngle(body,(int)Landmark.RIGHT_KNEE,(int)Landmark.RIGHT_ANKLE,(int)Landmark.RIGHT_HIP);
+    }
+
+    private float CalculateBodyAngle(Body b, int bone1, int bone2, int bone3)
     {
         Vector3 p1=b.instances[bone1].transform.localPosition;
         Vector3 p2=b.instances[bone2].transform.localPosition;
         Vector3 p3=b.instances[bone3].transform.localPosition;
 
-        // Compute X-axis (normalized)
-        Vector3 xAxis = (p2-p1).normalized;
-        
-        // Compute Y-axis (perpendicular to plane)
+        Vector3 p21 = (p2-p1).normalized;
         Vector3 p32 = (p3-p1).normalized;
         
-       return Vector3.Angle(xAxis, p32);
+       return Vector3.Angle(p21, p32);
     }
 
 
-    private void CalculateTorsoRotation(Body b)
-    {
-        Vector3 p1=b.instances[(int)Landmark.SHOULDER_CENTER].transform.localPosition;
-        Vector3 p2=b.instances[(int)Landmark.LEFT_SHOULDER].transform.localPosition;
-        Vector3 p3=b.instances[(int)Landmark.PELVIS].transform.localPosition;
-
-        // Compute X-axis (normalized)
-        Vector3 xAxis = (p1 - p2).normalized;
-        
-        // Compute Y-axis (perpendicular to plane)
-        Vector3 p32 = (p2 - p3).normalized;
-        Vector3 yAxis = Vector3.Cross(xAxis, p32);
-
-        // Compute X-axis (ensuring right-handed coordinate system)
-        Vector3 zAxis = Vector3.Cross(xAxis,yAxis);
-
-        // Construct rotation matrix
-        Matrix4x4 rotationMatrix = new Matrix4x4();
-        rotationMatrix.SetColumn(0, new Vector4(xAxis.x, xAxis.y, xAxis.z, 0));
-        rotationMatrix.SetColumn(1, new Vector4(yAxis.x, yAxis.y, yAxis.z, 0));
-        rotationMatrix.SetColumn(2, new Vector4(zAxis.x, zAxis.y, zAxis.z, 0));
-        rotationMatrix.SetColumn(3, new Vector4(0, 0, 0, 1)); // Homogeneous coordinate
-        b.instances[(int)Landmark.SHOULDER_CENTER].transform.localRotation=rotationMatrix.rotation;
-        b.instances[(int)Landmark.SHOULDER_CENTER].transform.Rotate(-90,0,0);
-    }
 
 
 
@@ -309,14 +219,11 @@ public class MotionTracking : MonoBehaviour
         CalculatePelvisRotation(b);
         CalculateTorsoRotation(b);        
         
-        CalculateRotationShoulderRight(b,(int)Landmark.RIGHT_SHOULDER,(int)Landmark.RIGHT_ELBOW,(int)Landmark.SHOULDER_CENTER);
-        CalculateRotationShoulderLeft(b,(int)Landmark.LEFT_SHOULDER,(int)Landmark.LEFT_ELBOW,(int)Landmark.SHOULDER_CENTER);
+        CalculateRotationShoulder(b,(int)Landmark.RIGHT_SHOULDER,(int)Landmark.RIGHT_ELBOW,(int)Landmark.SHOULDER_CENTER);
+        CalculateRotationShoulder(b,(int)Landmark.LEFT_SHOULDER,(int)Landmark.LEFT_ELBOW,(int)Landmark.SHOULDER_CENTER);
         
-        //CalculateRotationShoulder(b,(int)Landmark.RIGHT_SHOULDER,(int)Landmark.RIGHT_ELBOW,(int)Landmark.SHOULDER_CENTER);        
-        //CalculateRotationShoulder(b,(int)Landmark.LEFT_SHOULDER,(int)Landmark.LEFT_ELBOW,(int)Landmark.SHOULDER_CENTER);
-
-        CalculateRotationElbowRight(b,(int)Landmark.RIGHT_ELBOW,(int)Landmark.RIGHT_WRIST,(int)Landmark.RIGHT_SHOULDER);        
-        CalculateRotationElbowLeft(b,(int)Landmark.LEFT_ELBOW,(int)Landmark.LEFT_WRIST,(int)Landmark.LEFT_SHOULDER); 
+        CalculateRotationElbow(b,(int)Landmark.RIGHT_ELBOW,(int)Landmark.RIGHT_WRIST,(int)Landmark.RIGHT_SHOULDER);        
+        CalculateRotationElbow(b,(int)Landmark.LEFT_ELBOW,(int)Landmark.LEFT_WRIST,(int)Landmark.LEFT_SHOULDER); 
 
         CalculateRotationThigh(b,(int)Landmark.LEFT_HIP,(int)Landmark.LEFT_KNEE,(int)Landmark.PELVIS);        
         CalculateRotationThigh(b,(int)Landmark.RIGHT_HIP,(int)Landmark.RIGHT_KNEE,(int)Landmark.PELVIS); 
@@ -324,35 +231,6 @@ public class MotionTracking : MonoBehaviour
         CalculateRotationKnee(b,(int)Landmark.RIGHT_KNEE,(int)Landmark.RIGHT_ANKLE,(int)Landmark.RIGHT_HIP);        
         CalculateRotationKnee(b,(int)Landmark.LEFT_KNEE,(int)Landmark.LEFT_ANKLE,(int)Landmark.LEFT_HIP); 
 
-        float angle=CalculateElbowAngle(b,(int)Landmark.RIGHT_ELBOW,(int)Landmark.RIGHT_WRIST,(int)Landmark.RIGHT_SHOULDER);
-        if(angle>140){
-            Quaternion q1=b.instances[(int)Landmark.RIGHT_ELBOW].transform.localRotation;
-            Quaternion q2=b.instances[(int)Landmark.RIGHT_SHOULDER].transform.localRotation;
-            float w=1-Math.Max(0,(160f-angle)/20f);
-            b.instances[(int)Landmark.RIGHT_ELBOW].transform.localRotation=Quaternion.Lerp(q1,q2,w);
-        }
-        else {
-            Quaternion q1=b.instances[(int)Landmark.RIGHT_ELBOW].transform.localRotation;
-            Quaternion q2=b.instances[(int)Landmark.RIGHT_SHOULDER].transform.localRotation;
-            q1=q1*Quaternion.Euler(0,180-angle,0);
-            float w=Math.Max(0,(angle-120)/20f);
-            b.instances[(int)Landmark.RIGHT_SHOULDER].transform.localRotation=Quaternion.Lerp(q1,q2,w);
-        }
-
-        angle=CalculateElbowAngle(b,(int)Landmark.LEFT_ELBOW,(int)Landmark.LEFT_WRIST,(int)Landmark.LEFT_SHOULDER);
-        if(angle>140){
-            Quaternion q1=b.instances[(int)Landmark.LEFT_ELBOW].transform.localRotation;
-            Quaternion q2=b.instances[(int)Landmark.LEFT_SHOULDER].transform.localRotation;
-            float w=1-Math.Max(0,(160f-angle)/20f);
-            b.instances[(int)Landmark.LEFT_ELBOW].transform.localRotation=Quaternion.Lerp(q1,q2,w);
-        }
-        else {
-            Quaternion q1=b.instances[(int)Landmark.LEFT_ELBOW].transform.localRotation;
-            Quaternion q2=b.instances[(int)Landmark.LEFT_SHOULDER].transform.localRotation;
-            q1=q1*Quaternion.Euler(0,180+angle,0);
-            float w=Math.Max(0,(angle-120)/20f);
-            b.instances[(int)Landmark.LEFT_SHOULDER].transform.localRotation=Quaternion.Lerp(q1,q2,w);
-        }   
         
         b.UpdateLines();
 
