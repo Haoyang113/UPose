@@ -17,6 +17,8 @@ public class LinePlot : MonoBehaviour
     public enum AngleChoice { LeftElbow, RightElbow, LeftKnee, RightKnee }
     public AngleChoice BodyAngle=AngleChoice.RightElbow;
 
+    private float currentValue=0;
+
     void Start()
     {
         server = FindFirstObjectByType<MotionTracking>();
@@ -70,7 +72,11 @@ public class LinePlot : MonoBehaviour
             i=0;
             slot=0;
         }
-        line.SetPosition(i,new Vector3(getX(i),getBodyAngle()/180f,0));
+
+        //Smoothing
+        currentValue=currentValue*0.95f+0.05f*getBodyAngle()/180f;
+
+        line.SetPosition(i,new Vector3(getX(i),currentValue,0));
         slot+=Speed*Time.deltaTime;    
 
         for(int c=1;c<=PaddingSize;c++){
