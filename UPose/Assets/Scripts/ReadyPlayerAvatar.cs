@@ -126,6 +126,8 @@ public class ReadyPlayerAvatar : MonoBehaviour
         //Get right leg rotation and apply it to the avatar
         RightLeg.localRotation=server.GetRotation(Landmark.RIGHT_KNEE);
 
+
+        //server.MoveToFloor(this,-1);
     }
 
 }

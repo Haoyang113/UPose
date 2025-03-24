@@ -109,6 +109,10 @@ public class MotionTracking : MonoBehaviour
         float rotX = Mathf.Atan2(localDirection.z, localDirection.y) * Mathf.Rad2Deg;
         b.instances[bone1].transform.localRotation = base_rotation*Quaternion.Euler(rotX,0,rotZ);
  
+        //float rotY = -Mathf.Asin(direction.z) * Mathf.Rad2Deg;
+        //float rotZ = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        //b.instances[bone1].transform.localRotation = base_rotation*Quaternion.Euler(0,rotY,rotZ-90);
+ 
     }
 
     private void CalculateRotationElbow(Body b, int bone1, int bone2, int base_bone)
@@ -247,6 +251,17 @@ public class MotionTracking : MonoBehaviour
     public void SetVisible(bool visible)
     {
         bodyParent.gameObject.SetActive(visible);
+    }
+
+    public void MoveToFloor(Component component, float floorY){
+        Renderer[] renderers = component.GetComponentsInChildren<Renderer>();
+        float minY = float.MaxValue;
+
+        foreach (Renderer renderer in renderers)
+        {
+            minY = Mathf.Min(minY, renderer.bounds.min.y);
+        }
+        component.transform.localPosition+=new Vector3(0,floorY-minY,0);
     }
 
     private void Run()
