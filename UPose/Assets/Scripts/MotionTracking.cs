@@ -35,20 +35,11 @@ public class MotionTracking : MonoBehaviour
         child.SetActive(false);
         bodyParent=child.transform;
 
-        // Create a new GameObject
         GameObject linePrefab = new GameObject("linePrefab");
-
-        // Add a LineRenderer component
         LineRenderer lineRenderer = linePrefab.AddComponent<LineRenderer>();
-
-        // Set the line width
         lineRenderer.startWidth = 0.1f;
         lineRenderer.endWidth = 0.1f;
-
-        // Optional: Set material to default (otherwise, the line may be invisible)
         lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
-
-        // Optional: Set a color
         lineRenderer.startColor = Color.cyan;
         lineRenderer.endColor = Color.cyan;
 
@@ -344,7 +335,7 @@ public class MotionTracking : MonoBehaviour
                     }else h.positionsBuffer[(int)Landmark.SHOULDER_CENTER].visible=false;
 
                 }
-                Debug.Log("NEW DATA");
+                //Debug.Log("NEW DATA");
             }
             catch (EndOfStreamException)
             {
