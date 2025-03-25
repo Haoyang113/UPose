@@ -59,7 +59,7 @@ public class ReadyPlayerAvatar : MonoBehaviour
                 avatar_url= "67d411b30787acbf58ce58ac.glb";
                 break;
             case AvatarChoice.MaleTshirt:
-                avatar_url="67e1b51ae11c93725e4395c9.glb";
+                avatar_url="67e21d1a79ac9bcf81a46385.glb";
                 break;
             default:
                 avatar_url="avatar.glb";
