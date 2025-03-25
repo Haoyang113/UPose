@@ -113,7 +113,7 @@ public class ReadyPlayerAvatar : MonoBehaviour
     private void Update()
     {
         if(!AVATAR_LOADED)return;
-
+       
         //Get pelvis local rotation and apply it to the avatar
         Hips.localRotation=server.GetRotation(Landmark.PELVIS);
         //Get torso local rotation and apply it to the avatar

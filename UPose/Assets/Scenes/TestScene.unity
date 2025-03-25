@@ -545,6 +545,7 @@ MonoBehaviour:
   port: 52733
   multiplier: 10
   landmarkScale: 1
+  RestrictMotionRange: 1
   MMPose: 0
 --- !u!1 &992788407
 GameObject:
