@@ -25,7 +25,7 @@ public class ReadyPlayerAvatar : MonoBehaviour
 
     private bool AVATAR_LOADED=false;
 
-    public enum AvatarChoice { FemaleGymClothing, FemaleDress, MaleCasual }
+    public enum AvatarChoice { FemaleGymClothing, FemaleDress,FemaleCasual, MaleCasual, MaleTshirt}
     public AvatarChoice avatar;
 
     private void Start()
@@ -52,8 +52,14 @@ public class ReadyPlayerAvatar : MonoBehaviour
             case AvatarChoice.FemaleDress:
                 avatar_url="avatar1.glb";
                 break;
+            case AvatarChoice.FemaleCasual:
+                avatar_url="67e20a7fc5f8c4a77988b853.glb";
+                break;
             case AvatarChoice.MaleCasual:
                 avatar_url= "67d411b30787acbf58ce58ac.glb";
+                break;
+            case AvatarChoice.MaleTshirt:
+                avatar_url="67e1b51ae11c93725e4395c9.glb";
                 break;
             default:
                 avatar_url="avatar.glb";
