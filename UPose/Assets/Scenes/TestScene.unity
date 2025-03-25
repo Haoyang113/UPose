@@ -408,6 +408,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NumberOfPoints: 61
+  PaddingSize: 5
   Speed: 10
   PlotWidth: 2
   LineWidth: 0.02
@@ -441,6 +442,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NumberOfPoints: 61
+  PaddingSize: 5
   Speed: 10
   PlotWidth: 2
   LineWidth: 0.02
@@ -588,7 +590,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31b59419f1fa149d486ae127a3b82df7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  avatar: 2
+  avatar: 4
 --- !u!1 &1053062278
 GameObject:
   m_ObjectHideFlags: 0
