@@ -89,7 +89,14 @@ public class ReadyPlayerAvatar : MonoBehaviour
             RightUpLeg = GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "RightUpLeg");
             RightLeg = GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "RightLeg");
             
-            
+            Transform LeftFoot=GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "LeftFoot");
+            Rigidbody rb=LeftFoot.gameObject.AddComponent<Rigidbody>();
+            rb.isKinematic=true;
+            Transform RightFoot=GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "RightFoot");
+            rb=RightFoot.gameObject.AddComponent<Rigidbody>();
+            rb.isKinematic=true;
+             
+
             LeftShoulder = GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "LeftShoulder");
             
             LeftArm = GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "LeftArm");
