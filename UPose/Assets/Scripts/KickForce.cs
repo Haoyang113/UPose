@@ -13,8 +13,6 @@ public class KickForce : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Collided");
-
         if (collision.gameObject.CompareTag("Box"))
         {
             Rigidbody boxRb = collision.gameObject.GetComponent<Rigidbody>();
