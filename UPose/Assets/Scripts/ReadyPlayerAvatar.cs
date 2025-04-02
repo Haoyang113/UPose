@@ -14,14 +14,18 @@ public class ReadyPlayerAvatar : MonoBehaviour
     private Transform Spine;
     private Transform LeftUpLeg;
     private Transform LeftLeg;
+    private Transform LeftFoot;
     private Transform RightUpLeg;
     private Transform RightLeg;
+    private Transform RightFoot;
     private Transform LeftShoulder;
     private Transform LeftArm;
     private Transform LeftForeArm;
+    private Transform LeftHand;
     private Transform RightShoulder;
     private Transform RightArm;
     private Transform RightForeArm;
+    private Transform RightHand;
 
     private bool AVATAR_LOADED=false;
 
@@ -89,7 +93,7 @@ public class ReadyPlayerAvatar : MonoBehaviour
             RightUpLeg = GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "RightUpLeg");
             RightLeg = GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "RightLeg");
             
-            Transform LeftFoot=GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "LeftFoot");
+            LeftFoot=GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "LeftFoot");
             
             GameObject colliderHolder = new GameObject("LeftFootCollider");
             colliderHolder.transform.SetParent(LeftFoot);
@@ -103,7 +107,7 @@ public class ReadyPlayerAvatar : MonoBehaviour
             colliderHolder.AddComponent<KickForce>();
 
 
-            Transform RightFoot=GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "RightFoot");
+            RightFoot=GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "RightFoot");
         
             colliderHolder = new GameObject("RightFootCollider");
             colliderHolder.transform.SetParent(RightFoot);
@@ -122,7 +126,7 @@ public class ReadyPlayerAvatar : MonoBehaviour
             LeftArm.localRotation=Quaternion.Euler(0,0,0);
             LeftForeArm = GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "LeftForeArm");
             
-            Transform LeftHand=GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "LeftHand");
+            LeftHand=GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "LeftHand");
         
             colliderHolder = new GameObject("LeftHandCollider");
             colliderHolder.transform.SetParent(LeftHand);
@@ -141,7 +145,7 @@ public class ReadyPlayerAvatar : MonoBehaviour
             RightArm.localRotation=Quaternion.Euler(0,0,0);
             RightForeArm = GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "RightForeArm");
             
-            Transform RightHand=GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "RightHand");
+            RightHand=GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "RightHand");
         
             colliderHolder = new GameObject("RightHandCollider");
             colliderHolder.transform.SetParent(RightHand);
@@ -160,6 +164,20 @@ public class ReadyPlayerAvatar : MonoBehaviour
             Debug.Log("ERROR: GLTF file is NOT loaded!");
         }
     }
+
+    public bool isLoaded(){return AVATAR_LOADED;}
+    public GameObject getLeftHand(){return LeftHand.gameObject;}
+    public GameObject getRightHand(){return RightHand.gameObject;}
+    public GameObject getLeftFoot(){return LeftFoot.gameObject;}
+    public GameObject getRightFoot(){return RightFoot.gameObject;}
+    public GameObject getLeftForeArm(){return LeftForeArm.gameObject;}
+    public GameObject getRightForeArm(){return RightForeArm.gameObject;}
+    public GameObject getLeftLeg(){return LeftLeg.gameObject;}
+    public GameObject getRightLeg(){return RightLeg.gameObject;}
+    public GameObject getLeftShoulder(){return LeftShoulder.gameObject;}
+    public GameObject getRightShoulder(){return RightShoulder.gameObject;}
+    public GameObject getLeftUpLeg(){return LeftUpLeg.gameObject;}
+    public GameObject getRightUpLeg(){return RightUpLeg.gameObject;}
 
     private void Update()
     {
