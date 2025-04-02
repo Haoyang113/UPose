@@ -20,11 +20,11 @@ public class ObjectHolding : MonoBehaviour
         if(!initialized && avatar.isLoaded()){
             Debug.Log("Cylinder added");
             GameObject left_hand=avatar.getLeftHand();
-
+         
             //Attach the bow object (her it is shown as cylinder)
             GameObject cylinder = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
             cylinder.transform.SetParent(left_hand.transform);
-            cylinder.transform.localPosition = new Vector3(0,0,0.25f); 
+            cylinder.transform.localPosition = new Vector3(0,0.1f,0); 
             cylinder.transform.localRotation = Quaternion.Euler(0,0,90);
             cylinder.transform.localScale = new Vector3(0.1f, 0.5f, 0.1f); 
 
