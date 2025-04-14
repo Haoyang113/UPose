@@ -2,19 +2,19 @@ using System;
 using System.Linq;
 using UnityEngine;
 
-public class ObjectHolding : MonoBehaviour
+public class ArcherInteraction : MonoBehaviour
 {
     ReadyPlayerAvatar avatar;
-    bool initialized=false;
+    bool initialized = false;
     LineRenderer line;
     GameObject topBox;
     GameObject bottomBox;
 
     public GameObject objectHeld;
-    public Vector3 objectTranslation=new Vector3(0,0,0);
-    public Quaternion objectRotation=Quaternion.identity;
-    public Vector3 objectScale=new Vector3(1,1,1);
-    
+    public Vector3 objectTranslation = new Vector3(0, 0, 0);
+    public Quaternion objectRotation = Quaternion.identity;
+    public Vector3 objectScale = new Vector3(1, 1, 1);
+
     public GameObject object2Held;
     public Vector3 object2Translation = new Vector3(0, 0, 0);
     public Quaternion object2Rotation = Quaternion.identity;
@@ -34,9 +34,10 @@ public class ObjectHolding : MonoBehaviour
     {
         avatar = GetComponent<ReadyPlayerAvatar>();
 
-        if(objectHeld!=null){
+        if (objectHeld != null)
+        {
 
-            stringPosition=objectHeld.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "WB.string");
+            stringPosition = objectHeld.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "WB.string");
 
             Rigidbody rb = objectHeld.GetComponentInChildren<Rigidbody>();
             if (rb != null)
@@ -58,7 +59,8 @@ public class ObjectHolding : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!initialized && avatar.isLoaded()) {
+        if (!initialized && avatar.isLoaded())
+        {
             Debug.Log("objectHeld added");
             left_hand = avatar.getLeftPalm();
 
@@ -104,35 +106,36 @@ public class ObjectHolding : MonoBehaviour
         objectHeld.transform.localScale = objectScale;
 
 
-         if (isAnimated)
-         {
-             object2Held.transform.position +=direction*Time.deltaTime*speed ;
+        if (isAnimated)
+        {
+            object2Held.transform.position += direction * Time.deltaTime * speed;
             Vector3 diff = object2Held.transform.position - avatar.getLeftPalm().transform.position;
             if (diff.magnitude > 20)//how far it can fly
             {
                 isAnimated = false;
                 object2Held.transform.SetParent(left_hand.transform);
             }
-         }
-         else
-         {
-             object2Held.transform.localPosition = object2Translation;
-             object2Held.transform.localRotation = object2Rotation;
-             object2Held.transform.localScale = object2Scale;
+        }
+        else
+        {
+            object2Held.transform.localPosition = object2Translation;
+            object2Held.transform.localRotation = object2Rotation;
+            object2Held.transform.localScale = object2Scale;
 
             Vector3 diff = avatar.getLeftPalm().transform.position - avatar.getRightPalm().transform.position;
-             if (diff.magnitude > 1f) { //how far the hands should be to trigger
-                  isAnimated = true;
-                  direction = diff.normalized;
-                  object2Held.transform.SetParent(null);
-                  //We have to rotate the object2Held to align with the direction
-             }
-         }
+            if (diff.magnitude > 1f)
+            { //how far the hands should be to trigger
+                isAnimated = true;
+                direction = diff.normalized;
+                object2Held.transform.SetParent(null);
+                //We have to rotate the object2Held to align with the direction
+            }
+        }
 
 
 
 
-        
+
 
         stringPosition.position = avatar.getRightPalm().transform.position;
 
