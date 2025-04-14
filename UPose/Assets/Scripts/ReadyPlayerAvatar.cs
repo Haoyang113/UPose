@@ -22,10 +22,12 @@ public class ReadyPlayerAvatar : MonoBehaviour
     private Transform LeftArm;
     private Transform LeftForeArm;
     private Transform LeftHand;
+    private Transform LeftPalm;
     private Transform RightShoulder;
     private Transform RightArm;
     private Transform RightForeArm;
     private Transform RightHand;
+    private Transform RightPalm;
 
     private bool AVATAR_LOADED=false;
 
@@ -128,6 +130,12 @@ public class ReadyPlayerAvatar : MonoBehaviour
             
             LeftHand=GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "LeftHand");
         
+            GameObject leftPalm = new GameObject("LeftPalm");
+            leftPalm.transform.parent=LeftHand;
+            leftPalm.transform.localPosition = new Vector3(0, 0.07f, 0.04f);
+            leftPalm.transform.localRotation = Quaternion.Euler(0,0,0);
+            LeftPalm=leftPalm.transform;
+
             colliderHolder = new GameObject("LeftHandCollider");
             colliderHolder.transform.SetParent(LeftHand);
             colliderHolder.transform.localPosition = new Vector3(0, 0.1f, 0);
@@ -147,6 +155,12 @@ public class ReadyPlayerAvatar : MonoBehaviour
             
             RightHand=GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "RightHand");
         
+            GameObject rightPalm = new GameObject("RightPalm");
+            rightPalm.transform.parent=RightHand;
+            rightPalm.transform.localPosition = new Vector3(0, 0.07f, 0.04f);
+            rightPalm.transform.localRotation = Quaternion.Euler(0,0,0);
+            RightPalm=rightPalm.transform;
+
             colliderHolder = new GameObject("RightHandCollider");
             colliderHolder.transform.SetParent(RightHand);
             colliderHolder.transform.localPosition = new Vector3(0, 0.1f, 0);
@@ -178,7 +192,8 @@ public class ReadyPlayerAvatar : MonoBehaviour
     public GameObject getRightShoulder(){return RightShoulder.gameObject;}
     public GameObject getLeftUpLeg(){return LeftUpLeg.gameObject;}
     public GameObject getRightUpLeg(){return RightUpLeg.gameObject;}
-
+    public GameObject getLeftPalm(){return LeftPalm.gameObject;}
+    public GameObject getRightPalm(){return RightPalm.gameObject;}
     private void Update()
     {
         if(!AVATAR_LOADED)return;
