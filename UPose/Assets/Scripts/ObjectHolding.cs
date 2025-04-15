@@ -1,5 +1,3 @@
-using System;
-using System.Linq;
 using UnityEngine;
 
 public class ObjectHolding : MonoBehaviour
@@ -14,20 +12,6 @@ public class ObjectHolding : MonoBehaviour
     public Vector3 objectTranslation=new Vector3(0,0,0);
     public Quaternion objectRotation=Quaternion.identity;
     public Vector3 objectScale=new Vector3(1,1,1);
-    
-    public GameObject object2Held;
-    public Vector3 object2Translation = new Vector3(0, 0, 0);
-    public Quaternion object2Rotation = Quaternion.identity;
-    public Vector3 object2Scale = new Vector3(1, 1, 1);
-
-    Transform stringPosition;
-    float animationY = 0;
-    bool isAnimated = false;
-    Vector3 direction;
-    float speed = 8;
-
-    GameObject left_hand;
-
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -35,19 +19,7 @@ public class ObjectHolding : MonoBehaviour
         avatar = GetComponent<ReadyPlayerAvatar>();
 
         if(objectHeld!=null){
-
-            stringPosition=objectHeld.GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "WB.string");
-
             Rigidbody rb = objectHeld.GetComponentInChildren<Rigidbody>();
-            if (rb != null)
-            {
-                rb.isKinematic = true;
-            }
-        }
-
-        if (object2Held != null)
-        {
-            Rigidbody rb = object2Held.GetComponentInChildren<Rigidbody>();
             if (rb != null)
             {
                 rb.isKinematic = true;
@@ -58,16 +30,15 @@ public class ObjectHolding : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!initialized && avatar.isLoaded()) {
+        if(!initialized && avatar.isLoaded()){
             Debug.Log("objectHeld added");
-            left_hand = avatar.getLeftPalm();
-
+            GameObject left_hand=avatar.getLeftPalm();
+         
             //Attach the bow object (her it is shown as objectHeld)
             //GameObject objectHeld = GameObject.CreatePrimitive(PrimitiveType.objectHeld);
             objectHeld.transform.SetParent(left_hand.transform);
-            object2Held.transform.SetParent(left_hand.transform);
+            
 
-            /*
             //make an anchor object for the top of the bow
             topBox = new GameObject();
             topBox.transform.SetParent(objectHeld.transform);
@@ -91,55 +62,22 @@ public class ObjectHolding : MonoBehaviour
 
             line = Instantiate(linePrefab).GetComponent<LineRenderer>();
             line.positionCount = 3;
-            */
+            
 
-            initialized = true;
-        }
+            initialized=true;
+        }  
 
-        if (!initialized) return;
+        if(!initialized)return;
 
 
-        objectHeld.transform.localPosition = objectTranslation;
+        objectHeld.transform.localPosition = objectTranslation; 
         objectHeld.transform.localRotation = objectRotation;
-        objectHeld.transform.localScale = objectScale;
-
-
-         if (isAnimated)
-         {
-             object2Held.transform.position +=direction*Time.deltaTime*speed ;
-            Vector3 diff = object2Held.transform.position - avatar.getLeftPalm().transform.position;
-            if (diff.magnitude > 20)//how far it can fly
-            {
-                isAnimated = false;
-                object2Held.transform.SetParent(left_hand.transform);
-            }
-         }
-         else
-         {
-             object2Held.transform.localPosition = object2Translation;
-             object2Held.transform.localRotation = object2Rotation;
-             object2Held.transform.localScale = object2Scale;
-
-            Vector3 diff = avatar.getLeftPalm().transform.position - avatar.getRightPalm().transform.position;
-             if (diff.magnitude > 1f) { //how far the hands should be to trigger
-                  isAnimated = true;
-                  direction = diff.normalized;
-                  object2Held.transform.SetParent(null);
-                  //We have to rotate the object2Held to align with the direction
-             }
-         }
-
-
-
-
-        
-
-        stringPosition.position = avatar.getRightPalm().transform.position;
+        objectHeld.transform.localScale = objectScale; 
 
         //On every frame update the position of the line
-        //line.SetPosition(0, topBox.transform.position);
-        //line.SetPosition(1, avatar.getRightPalm().transform.position);
-        //line.SetPosition(2, bottomBox.transform.position);
+        line.SetPosition(0, topBox.transform.position);
+        line.SetPosition(1, avatar.getRightPalm().transform.position);
+        line.SetPosition(2, bottomBox.transform.position);
 
     }
 }
