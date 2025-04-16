@@ -1,30 +1,22 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class WaterfallCollision : MonoBehaviour
 {
-    public float kickForce = 10f; 
-    private Rigidbody footRb; 
+    public UnityEvent uEvent;
+    public GameObject TriggerObject;
+
 
     void Start()
     {
-        
-        footRb = GetComponent<Rigidbody>();
+
     }
 
-    private void OnCollisionEnter(Collision collision)
+    public void OnTriggerEnter(Collider collider)
     {
-        if (collision.gameObject.CompareTag("Box"))
+        if (collider.gameObject == TriggerObject)
         {
-            Rigidbody boxRb = collision.gameObject.GetComponent<Rigidbody>();
-            if (boxRb != null && footRb != null)
-            {
-                float forceAmount = footRb.linearVelocity.magnitude * kickForce;
-
-                Vector3 kickDirection = collision.contacts[0].point - transform.position;
-                kickDirection = kickDirection.normalized;
-
-                boxRb.AddForce(kickDirection * forceAmount, ForceMode.Impulse);
-            }
+            uEvent.Invoke();
         }
     }
 }
