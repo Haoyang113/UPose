@@ -2,7 +2,7 @@
 
 # UPose - A framework for AI motion tracking in Unity
 
-UPose is a useful resource that utilizes different AI methods for human motion tracking in Unity and demonstrates its capabilities in different sample demo applications.
+UPose is a useful resource that utilizes different AI methods for human motion tracking in Unity and demonstrates its capabilities in a gallery of sample demo applications.
 The UPose repository currently supports MediaPipe and MMPose for motion tracking. 
 
 ## Contents
