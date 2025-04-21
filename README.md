@@ -1,8 +1,8 @@
 <img src="UPose Logo.png" alt="Your Scene Name" width="150"/>
 
-# UPose - A framework for camera-based motion tracking in Unity
+# UPose - A framework for AI motion tracking in Unity
 
-UPose is a useful resource that utilizes different methods of human motion tracking in Unity and demonstrates its capabilities in different sample demo applications.
+UPose is a useful resource that utilizes different AI methods for human motion tracking in Unity and demonstrates its capabilities in different sample demo applications.
 The UPose repository currently supports MediaPipe and MMPose for motion tracking. 
 
 ## Contents
@@ -21,8 +21,11 @@ In this demo, the user must shoot the target hanging from the tree by mimicking 
 
 <img src="Screenshots/ArcherScene.png" alt="Your Scene Name" width="600"/>
 
-### Demo 4 - Hitting Targets
-Brief desciption and screenshot
+### Demo 4 - Dance Scene
+In this scene you dance with four other avatars that mimic your moves on their own pace. Scene: `DanceScene.unity` 
+
+<img src="Screenshots/DanceScene.png" alt="Dance Scene" width="600"/>
+
 
 ### Demo 5 - Interactive Waterfall
 Where motion meets water, each movement sparks a shimmer of falling light.
