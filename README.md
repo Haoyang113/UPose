@@ -23,7 +23,7 @@ In this demo, the user must shoot the target hanging from the tree by mimcing an
 Brief desciption and screenshot
 
 ### Demo 5 - Interactive Waterfall
-Brief description and screenshot
+Where motion meets water, each movement sparks a shimmer of falling light.
 
 <img src="Screenshots/WaterfallScene.png" alt="Your Scene Name" width="600"/>
 
