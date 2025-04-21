@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 74603272}
   - component: {fileID: 74603271}
   m_Layer: 5
-  m_Name: Number
+  m_Name: counterText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -157,7 +157,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 551b4c63286b0fe47824ecb3f4c5835c, type: 2}
   m_sharedMaterial: {fileID: 2669353469360948534, guid: 551b4c63286b0fe47824ecb3f4c5835c, type: 2}
@@ -252,7 +252,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 794, y: 235}
+  m_AnchoredPosition: {x: 530, y: 293}
   m_SizeDelta: {x: 500, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &156906099
@@ -266,7 +266,6 @@ GameObject:
   - component: {fileID: 156906100}
   - component: {fileID: 156906103}
   - component: {fileID: 156906102}
-  - component: {fileID: 156906104}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -290,8 +289,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 223, y: -251}
-  m_SizeDelta: {x: 200, y: 200}
+  m_AnchoredPosition: {x: 259, y: -320}
+  m_SizeDelta: {x: 210, y: 270}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &156906102
 MonoBehaviour:
@@ -313,7 +312,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c1c86a7a448aa9e4f83462af4605e463, type: 3}
+  m_Sprite: {fileID: 21300000, guid: abd9c2022ce044047bcc3644af286847, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -331,25 +330,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 156906099}
   m_CullTransparentMesh: 1
---- !u!114 &156906104
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 156906099}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 718e53b02680acf4fae2db239587ac1c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  folderPath: YogaPoses
-  countdownDuration: 30
-  changePoseDuration: 5
-  countdownText: {fileID: 74603271}
-  changePoseUI: {fileID: 1068202877}
-  normalColor: {r: 1, g: 1, b: 1, a: 1}
-  warningColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -616,17 +596,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1368640301}
     m_Modifications:
-    - target: {fileID: 1968373806290374442, guid: 676614c30efe6fc4b82edb9eddfa3ad6, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 404.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 1968373806290374442, guid: 676614c30efe6fc4b82edb9eddfa3ad6, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 82.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 1968373806290374443, guid: 676614c30efe6fc4b82edb9eddfa3ad6, type: 3}
-      propertyPath: m_IsActive
-      value: 1
+    - target: {fileID: 62727957734349316, guid: 676614c30efe6fc4b82edb9eddfa3ad6, type: 3}
+      propertyPath: m_text
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1968373806953840000, guid: 676614c30efe6fc4b82edb9eddfa3ad6, type: 3}
       propertyPath: m_Pivot.x
@@ -661,14 +633,6 @@ PrefabInstance:
       value: 82.7
       objectReference: {fileID: 0}
     - target: {fileID: 1968373806953840000, guid: 676614c30efe6fc4b82edb9eddfa3ad6, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1968373806953840000, guid: 676614c30efe6fc4b82edb9eddfa3ad6, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1968373806953840000, guid: 676614c30efe6fc4b82edb9eddfa3ad6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -698,11 +662,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1968373806953840000, guid: 676614c30efe6fc4b82edb9eddfa3ad6, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -667
+      value: -499
       objectReference: {fileID: 0}
     - target: {fileID: 1968373806953840000, guid: 676614c30efe6fc4b82edb9eddfa3ad6, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 284
+      value: 339
       objectReference: {fileID: 0}
     - target: {fileID: 1968373806953840000, guid: 676614c30efe6fc4b82edb9eddfa3ad6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -720,24 +684,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Button Green Outline
       objectReference: {fileID: 0}
-    - target: {fileID: 1968373806953840001, guid: 676614c30efe6fc4b82edb9eddfa3ad6, type: 3}
-      propertyPath: m_IsActive
-      value: 1
+    - target: {fileID: 2633370029007441428, guid: 676614c30efe6fc4b82edb9eddfa3ad6, type: 3}
+      propertyPath: m_Name
+      value: exerciseText
       objectReference: {fileID: 0}
-    - target: {fileID: 1968373807185072952, guid: 676614c30efe6fc4b82edb9eddfa3ad6, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1968373807185072954, guid: 676614c30efe6fc4b82edb9eddfa3ad6, type: 3}
-      propertyPath: m_Text
-      value: 'Follow this Yoga Pose:'
-      objectReference: {fileID: 0}
-    - target: {fileID: 1968373807185072954, guid: 676614c30efe6fc4b82edb9eddfa3ad6, type: 3}
-      propertyPath: m_FontData.m_FontSize
-      value: 30
+    - target: {fileID: 8001640295035639060, guid: 676614c30efe6fc4b82edb9eddfa3ad6, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 117
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 1968373807185072952, guid: 676614c30efe6fc4b82edb9eddfa3ad6, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 676614c30efe6fc4b82edb9eddfa3ad6, type: 3}
@@ -922,9 +879,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 992788407}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 300545057dcd1174c9e7d246593c0f66, type: 3}
+  m_Script: {fileID: 11500000, guid: 4fecf83e7c3407c499c9b818607fffcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  exerciseImage: {fileID: 156906102}
+  leftHipAbductionSprite: {fileID: 21300000, guid: 90d827a692b8ad9418f7c3eb7577bfc5, type: 3}
+  rightHipAbductionSprite: {fileID: 21300000, guid: abd9c2022ce044047bcc3644af286847, type: 3}
+  leftElbowFlexionSprite: {fileID: 21300000, guid: a31a9f2e02d59eb4c8300f267cc45220, type: 3}
+  rightElbowFlexionSprite: {fileID: 21300000, guid: d916b03dc0cb7f9438da43f21a26f765, type: 3}
+  currentExercise: 1
+  exerciseText: {fileID: 1476886372}
+  counterText: {fileID: 74603271}
 --- !u!1 &1005939313
 GameObject:
   m_ObjectHideFlags: 0
@@ -1108,7 +1073,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1068202878
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1254,7 +1219,7 @@ PrefabInstance:
     - target: {fileID: 4108644330525475946, guid: 2b00e6d0b305f144fb9ed47dfab82c20, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 156906104}
+      objectReference: {fileID: 0}
     - target: {fileID: 4108644330525475946, guid: 2b00e6d0b305f144fb9ed47dfab82c20, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -1562,6 +1527,17 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1476886372 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 62727957734349316, guid: 676614c30efe6fc4b82edb9eddfa3ad6, type: 3}
+  m_PrefabInstance: {fileID: 571611555}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1610239265
 GameObject:
   m_ObjectHideFlags: 0

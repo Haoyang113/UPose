@@ -200,6 +200,8 @@ public class ReadyPlayerAvatar : MonoBehaviour
 
     public Quaternion getRightHipRotation() { return server.GetRotation(Landmark.RIGHT_HIP); }
     public Quaternion getLeftHipRotation() { return server.GetRotation(Landmark.LEFT_HIP); }
+    public Quaternion getRightElbowRotation() { return server.GetRotation(Landmark.RIGHT_ELBOW); }
+    public Quaternion getLeftElbowRotation() { return server.GetRotation(Landmark.LEFT_ELBOW); }
     private void Update()
     {
         if(!AVATAR_LOADED)return;
