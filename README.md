@@ -13,7 +13,7 @@ In this demo the user must complete an exercise routine with hip adbuctions and 
 Brief desciption and screenshot
 
 ### Demo 3 - Archer
-Brief desciption and screenshot
+In this demo, the user must shoot the target hanging from the tree by mimcing an archer.
 
 ### Demo 4 - Hitting Targets
 Brief desciption and screenshot
