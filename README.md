@@ -28,7 +28,7 @@ In this scene you dance with four other avatars that mimic your moves on their o
 
 
 ### Demo 5 - Interactive Waterfall
-Where motion meets water, each movement sparks a shimmer of falling light.
+Where motion meets water, each movement sparks a shimmer of falling light. Scene: `Waterfallscene1.unity`
 
 <img src="Screenshots/WaterfallScene.png" alt="Your Scene Name" width="600"/>
 
