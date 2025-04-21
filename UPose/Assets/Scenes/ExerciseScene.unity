@@ -885,8 +885,8 @@ MonoBehaviour:
   exerciseImage: {fileID: 156906102}
   leftHipAbductionSprite: {fileID: 21300000, guid: 90d827a692b8ad9418f7c3eb7577bfc5, type: 3}
   rightHipAbductionSprite: {fileID: 21300000, guid: abd9c2022ce044047bcc3644af286847, type: 3}
-  leftElbowFlexionSprite: {fileID: 21300000, guid: a31a9f2e02d59eb4c8300f267cc45220, type: 3}
-  rightElbowFlexionSprite: {fileID: 21300000, guid: d916b03dc0cb7f9438da43f21a26f765, type: 3}
+  leftElbowFlexionSprite: {fileID: 21300000, guid: ed1ac4a0e20f47c4a90f918f95d55960, type: 3}
+  rightElbowFlexionSprite: {fileID: 21300000, guid: 1e2285c273e396b4f8a089e0242c2a2a, type: 3}
   currentExercise: 1
   exerciseText: {fileID: 1476886372}
   counterText: {fileID: 74603271}
