@@ -1,7 +1,25 @@
-# UPose
+# UPose - A framework for camera-based motion tracking in Unity
 
-UPose is a useful resource that utilizes different methods of human motion tracking in Unity and demonstrates its capabilities in different sample applications.
+UPose is a useful resource that utilizes different methods of human motion tracking in Unity and demonstrates its capabilities in different sample demo applications.
 The UPose repository currently supports MediaPipe and MMPose for motion tracking. 
+
+## Contents
+### Demo 1 - Exercise Room
+In this demo the user must complete an exercise routine with hip adbuctions and elbow flexions. Scene: `ExerciseScene.unity`
+
+<img src="Screenshots/ExerciseScene.png" alt="Your Scene Name" width="600"/>
+
+### Demo 2 - Soccer
+Brief desciption and screenshot
+
+### Demo 3 - Archer
+Brief desciption and screenshot
+
+### Demo 4 - Hitting Targets
+Brief desciption and screenshot
+
+### Demo 5 - Interactive Waterfall
+Brief description and screenshot
 
 ## Prerequisites
 
@@ -47,22 +65,6 @@ conda create --name openmmlab python=3.8 -y
 conda activate openmmlab
 ```
 
-## Unity Demos
-
-### Demo 1 - Soccer
-Brief desciption and screenshot
-
-### Demo 2 - Yoga Studio
-Brief desciption and screenshot
-
-### Demo 3 - Archer
-Brief desciption and screenshot
-
-### Demo 4 - Hitting Targets
-Brief desciption and screenshot
-
-### Demo 5 - Interactive Waterfall
-Brief description and screenshot
 
 ## Credits
 
