@@ -23,6 +23,8 @@ Brief desciption and screenshot
 ### Demo 5 - Interactive Waterfall
 Brief description and screenshot
 
+<img src="Screenshots/WaterfallScene.png" alt="Your Scene Name" width="600"/>
+
 ### Demo 6 - CatchBall
 Use both hands to control a platform to catch the ball into the basket!
 <img src="Screenshots/CatchBallScene.png" alt="Your Scene Name" width="600"/>
