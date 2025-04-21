@@ -10,7 +10,9 @@ In this demo the user must complete an exercise routine with hip adbuctions and 
 <img src="Screenshots/ExerciseScene.png" alt="Your Scene Name" width="600"/>
 
 ### Demo 2 - Soccer
-Brief desciption and screenshot
+In this demo the user kicks a soccer ball in a soccer stadium. Scene: `SoccerScene.unity`
+
+<img src="Screenshots/SoccerScene.png" alt="Your Scene Name" width="600"/>
 
 ### Demo 3 - Archer
 In this demo, the user must shoot the target hanging from the tree by mimcing an archer.
