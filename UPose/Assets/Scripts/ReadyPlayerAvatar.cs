@@ -31,7 +31,7 @@ public class ReadyPlayerAvatar : MonoBehaviour
 
     private bool AVATAR_LOADED=false;
 
-    public enum AvatarChoice { FemaleGymClothing, FemaleDress,FemaleCasual, MaleCasual, MaleTshirt, MaleArmored}
+    public enum AvatarChoice { FemaleGymClothing, FemaleDress,FemaleCasual, MaleCasual, MaleTshirt, MaleArmored, FemaleYogaOutfit}
     public AvatarChoice avatar;
 
     private void Start()
@@ -69,6 +69,9 @@ public class ReadyPlayerAvatar : MonoBehaviour
                 break;
             case AvatarChoice.MaleArmored:
                 avatar_url="67e21f3db6349f1f57421ba0.glb";
+                break;
+            case AvatarChoice.FemaleYogaOutfit:
+                avatar_url = "67f433b69dc08cf26d2cf585.glb";
                 break;
             default:
                 avatar_url="avatar.glb";
@@ -194,6 +197,11 @@ public class ReadyPlayerAvatar : MonoBehaviour
     public GameObject getRightUpLeg(){return RightUpLeg.gameObject;}
     public GameObject getLeftPalm(){return LeftPalm.gameObject;}
     public GameObject getRightPalm(){return RightPalm.gameObject;}
+
+    public Quaternion getRightHipRotation() { return server.GetRotation(Landmark.RIGHT_HIP); }
+    public Quaternion getLeftHipRotation() { return server.GetRotation(Landmark.LEFT_HIP); }
+    public Quaternion getRightElbowRotation() { return server.GetRotation(Landmark.RIGHT_ELBOW); }
+    public Quaternion getLeftElbowRotation() { return server.GetRotation(Landmark.LEFT_ELBOW); }
     private void Update()
     {
         if(!AVATAR_LOADED)return;
