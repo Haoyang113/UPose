@@ -23,6 +23,10 @@ Brief desciption and screenshot
 ### Demo 5 - Interactive Waterfall
 Brief description and screenshot
 
+### Demo 6 - CatchBall
+Use both hands to control a platform to catch the ball into the basket!
+<img src="Screenshots/CatchBallScene.png" alt="Your Scene Name" width="600"/>
+
 ## Prerequisites
 
 The motion tracking methods are implemented in Python and stream the data to Unity. 
