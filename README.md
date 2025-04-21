@@ -1,3 +1,5 @@
+<img src="UPose Logo.png" alt="Your Scene Name" width="150"/>
+
 # UPose - A framework for camera-based motion tracking in Unity
 
 UPose is a useful resource that utilizes different methods of human motion tracking in Unity and demonstrates its capabilities in different sample demo applications.
