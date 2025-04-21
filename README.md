@@ -17,7 +17,9 @@ In this demo the user kicks a soccer ball in a soccer stadium. Scene: `SoccerSce
 <img src="Screenshots/SoccerScene.png" alt="Your Scene Name" width="600"/>
 
 ### Demo 3 - Archer
-In this demo, the user must shoot the target hanging from the tree by mimcing an archer.
+In this demo, the user must shoot the target hanging from the tree by mimicking an archer.
+
+<img src="Screenshots/ArcherScene.png" alt="Your Scene Name" width="600"/>
 
 ### Demo 4 - Hitting Targets
 Brief desciption and screenshot
