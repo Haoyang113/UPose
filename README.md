@@ -31,7 +31,6 @@ In this scene you dance with four other avatars that mimic your moves on their o
 
 <img src="Screenshots/DanceScene.png" alt="Dance Scene" width="600"/>
 
-
 ### Demo 5 - 🏞️ Interactive Waterfall
 Where motion meets water, each movement sparks a shimmer of falling light. Scene: `Waterfallscene1.unity`
 
@@ -40,6 +39,19 @@ Where motion meets water, each movement sparks a shimmer of falling light. Scene
 ### Demo 6 - 🏏 CatchBall
 Use both hands to control a platform to catch the ball into the basket!
 <img src="Screenshots/CatchBallScene.png" alt="Your Scene Name" width="600"/>
+
+## Unity C# Example
+UPose API is simple and easy to use in C# in Unity. Here is a 3-line example that shows how to get a bone rotation from the motion tracker and apply it to an avatar.
+
+```csharp
+MotionTrackingPose pose = FindFirstObjectByType<MotionTracking>();
+
+//Get right fore arm rotation
+Quaternion rotation=pose.GetRotation(Landmark.LEFT_ELBOW);
+
+//Apply the rotation to your avatar
+LeftForeArm.localRotation=rotation;
+```
 
 ## Prerequisites
 
