@@ -1,4 +1,4 @@
-# <img src="UPose Logo.png" alt="Your Scene Name" width="150"/> UPose - A framework for AI motion tracking in Unity
+# <img src="UPose Logo.png" alt="Your Scene Name" width="150"/> UPose - AI motion tracking in Unity
 
 UPose is a Unity resource that utilizes different AI methods for human motion tracking and demonstrates its capabilities in a gallery of sample applications.
 You can use the UPose framework as a setup for your own projects, as an experimental setup for human-computer interaction research, or even as instructional material for courses that involve movement, media, and machines. 
