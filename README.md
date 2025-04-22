@@ -6,6 +6,7 @@ You can use the UPose framework as a setup for your own projects, as an experime
 - 🦾 MediaPipe human motion tracking
 - 🦿 MMPose human motion tracking
 - 💻 Simple API for accessing human pose data
+- 🧍 Standard Human IK skeleton support
 - ⌨️ Real-time data streaming from Python to Unity
 - 🏃 Several interactive demos included
 
