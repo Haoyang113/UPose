@@ -3,40 +3,40 @@
 UPose is a Unity resource that utilizes different AI methods for human motion tracking and demonstrates its capabilities in a gallery of sample applications.
 You can use the UPose framework as a setup for your own projects, as an experimental setup for human-computer interaction research, or even as instructional material for courses that involve movement, media, and machines. 
 ### Features
-- MediaPipe human motion tracking
-- MMPose human motion tracking
-- Simple API for accessing human pose data
-- Real-time data streaming from Python to Unity
-- Several interactive demos included
+- 🦾 MediaPipe human motion tracking
+- 🦿 MMPose human motion tracking
+- 💻 Simple API for accessing human pose data
+- ⌨️ Real-time data streaming from Python to Unity
+- 🏃 Several interactive demos included
 
-## Contents
-### Demo 1 - Exercise Room
+## 📔 Contents
+### Demo 1 - 🏃‍♂️ Exercise Room
 In this demo the user must complete an exercise routine with hip adbuctions and elbow flexions. Scene: `ExerciseScene.unity`
 
 <img src="Screenshots/ExerciseScene.png" alt="Your Scene Name" width="600"/>
 
-### Demo 2 - Soccer
+### Demo 2 - ⚽ Soccer
 In this demo the user kicks a soccer ball in a soccer stadium. Scene: `SoccerScene.unity`
 
 <img src="Screenshots/SoccerScene.png" alt="Your Scene Name" width="600"/>
 
-### Demo 3 - Archer
+### Demo 3 - 🏹 Archer
 In this demo, the user must shoot the target hanging from the tree by mimicking an archer.
 
 <img src="Screenshots/ArcherScene.png" alt="Your Scene Name" width="600"/>
 
-### Demo 4 - Dance Scene
+### Demo 4 - 🕺 Dance Scene
 In this scene you dance with four other avatars that mimic your moves on their own pace. Scene: `DanceScene.unity` 
 
 <img src="Screenshots/DanceScene.png" alt="Dance Scene" width="600"/>
 
 
-### Demo 5 - Interactive Waterfall
+### Demo 5 - 🏞️ Interactive Waterfall
 Where motion meets water, each movement sparks a shimmer of falling light. Scene: `Waterfallscene1.unity`
 
 <img src="Screenshots/WaterfallScene.png" alt="Your Scene Name" width="600"/>
 
-### Demo 6 - CatchBall
+### Demo 6 - 🏏 CatchBall
 Use both hands to control a platform to catch the ball into the basket!
 <img src="Screenshots/CatchBallScene.png" alt="Your Scene Name" width="600"/>
 
