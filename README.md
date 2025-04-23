@@ -1,4 +1,4 @@
-# <img src="UPose Logo.png" alt="Your Scene Name" width="150"/> UPose - AI motion tracking in Unity
+# <img src="UPose Logo.png" alt="Your Scene Name" width="150"/> UPose - AI motion tracking for Unity
 
 UPose is a Unity resource that utilizes different AI methods for human motion tracking and demonstrates its capabilities in a gallery of sample applications.
 You can use the UPose framework as a setup for your own projects, as an experimental setup for human-computer interaction research, or even as instructional material for courses that involve movement, media, and machines. 
@@ -9,6 +9,11 @@ You can use the UPose framework as a setup for your own projects, as an experime
 - 🧍 Standard Human IK skeleton support
 - ⌨️ Real-time data streaming from Python to Unity
 - 🏃 Several interactive demos included
+
+## ✍ Cite as
+If you use this repository in your research please cite as:
+
+`UPose - AI motion tracking for Unity [Computer software]. GitHub, 2023. https://github.com/digitalworlds/UPose`
 
 ## 📔 Contents
 ### Demo 1 - 🏃‍♂️ Exercise Room
