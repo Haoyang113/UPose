@@ -8,7 +8,9 @@ using System;
 public class ReadyPlayerAvatar : MonoBehaviour
 {
 
-    private MotionTracking server;
+    private PoseMemory server;
+
+    public int Delay=0;
 
     private Transform Hips;
     private Transform Spine;
@@ -37,10 +39,10 @@ public class ReadyPlayerAvatar : MonoBehaviour
     private void Start()
     {
 
-        server = FindFirstObjectByType<MotionTracking>();
+        server = FindFirstObjectByType<PoseMemory>();
         if (server == null)
         {
-            Debug.LogError("You must have a Pipeserver in the scene!");
+            Debug.LogError("You must have a MotionTracking server in the scene!");
         }
 
         InitializeAvatar();
@@ -204,28 +206,28 @@ public class ReadyPlayerAvatar : MonoBehaviour
     public Quaternion getLeftElbowRotation() { return server.GetRotation(Landmark.LEFT_ELBOW); }
     private void Update()
     {
-        if(!AVATAR_LOADED)return;
+        if(!AVATAR_LOADED || server==null) return;
        
         //Get pelvis local rotation and apply it to the avatar
-        Hips.localRotation=server.GetRotation(Landmark.PELVIS);
+        Hips.localRotation=server.GetRotation(Landmark.PELVIS,Delay);
         //Get torso local rotation and apply it to the avatar
-        Spine.localRotation=server.GetRotation(Landmark.SHOULDER_CENTER);
+        Spine.localRotation=server.GetRotation(Landmark.SHOULDER_CENTER,Delay);
         //Get right upper arm rotation and apply it to the avatar
-        RightShoulder.localRotation=server.GetRotation(Landmark.RIGHT_SHOULDER);
+        RightShoulder.localRotation=server.GetRotation(Landmark.RIGHT_SHOULDER,Delay);
         //Get left upper arm rotation and apply it to the avatar
-        LeftShoulder.localRotation=server.GetRotation(Landmark.LEFT_SHOULDER);
+        LeftShoulder.localRotation=server.GetRotation(Landmark.LEFT_SHOULDER,Delay);
         //Get left fore arm rotation and apply it to the avatar
-        LeftForeArm.localRotation=server.GetRotation(Landmark.LEFT_ELBOW);
+        LeftForeArm.localRotation=server.GetRotation(Landmark.LEFT_ELBOW,Delay);
         //Get right fore arm rotation and apply it to the avatar
-        RightForeArm.localRotation=server.GetRotation(Landmark.RIGHT_ELBOW);
+        RightForeArm.localRotation=server.GetRotation(Landmark.RIGHT_ELBOW,Delay);
         //Get right thigh arm rotation and apply it to the avatar  
-        RightUpLeg.localRotation=server.GetRotation(Landmark.RIGHT_HIP);
+        RightUpLeg.localRotation=server.GetRotation(Landmark.RIGHT_HIP,Delay);
         //Get left thigh rotation and apply it to the avatar
-        LeftUpLeg.localRotation=server.GetRotation(Landmark.LEFT_HIP);
+        LeftUpLeg.localRotation=server.GetRotation(Landmark.LEFT_HIP,Delay);
         //Get left leg rotation and apply it to the avatar
-        LeftLeg.localRotation=server.GetRotation(Landmark.LEFT_KNEE);
+        LeftLeg.localRotation=server.GetRotation(Landmark.LEFT_KNEE,Delay);
         //Get right leg rotation and apply it to the avatar
-        RightLeg.localRotation=server.GetRotation(Landmark.RIGHT_KNEE);
+        RightLeg.localRotation=server.GetRotation(Landmark.RIGHT_KNEE,Delay);
 
 
         //server.MoveToFloor(this,-1);

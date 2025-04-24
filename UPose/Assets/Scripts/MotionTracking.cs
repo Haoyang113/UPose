@@ -5,7 +5,7 @@ using UnityEngine;
 
 
 [DefaultExecutionOrder(-1)]
-public class MotionTracking : MonoBehaviour
+public class MotionTracking : MonoBehaviour, MotionTrackingPose
 {
     public string host = "127.0.0.1"; // This machines host.
     public int port = 52733; // Must match the Python side.
@@ -22,6 +22,7 @@ public class MotionTracking : MonoBehaviour
 
     private Body body;
 
+    private long frame_counter=0;
 
     public Transform GetLandmark(Landmark mark)
     {
@@ -84,7 +85,6 @@ public class MotionTracking : MonoBehaviour
         float rotX = Mathf.Atan2(localDirection.z, localDirection.y) * Mathf.Rad2Deg;
     
         b.instances[(int)Landmark.SHOULDER_CENTER].transform.localRotation = base_rotation*Quaternion.Euler(rotX,0,rotZ);
-
     }
 
 
@@ -381,6 +381,7 @@ public class MotionTracking : MonoBehaviour
 
                 }
                 //Debug.Log("NEW DATA");
+                frame_counter+=1;
             }
             catch (EndOfStreamException)
             {
@@ -390,6 +391,8 @@ public class MotionTracking : MonoBehaviour
         }
 
     }
+
+    public long getFrameCounter(){return frame_counter;}
 
     private void OnDisable()
     {
