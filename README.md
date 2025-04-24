@@ -45,7 +45,7 @@ Where motion meets water, each movement sparks a shimmer of falling light. Scene
 Use both hands to control a platform to catch the ball into the basket!
 <img src="Screenshots/CatchBallScene.png" alt="Your Scene Name" width="600"/>
 
-## Unity C# Example
+## 💻 Unity C# Example
 UPose API is simple and easy to use in C# in Unity. Here is a 3-line example that shows how to get a bone rotation from the motion tracker and apply it to an avatar.
 
 ```csharp
@@ -58,7 +58,7 @@ Quaternion rotation=pose.GetRotation(Landmark.LEFT_ELBOW);
 LeftForeArm.localRotation=rotation;
 ```
 
-## Skeletal Structure
+## 💀 Skeletal Structure
 UPose supports avatars with the standard human IK skeleton. Avatars with this structure can be created using tools such as readyplayer.me.
 The UPose API gets the 3D coordinates of the corresponding human joints from the motion tracking source (MediaPipe, MMPose, etc.) and it calculates joint rotations that can be then assigned as localRotations to the corresponding bones of the skeleton. The bone hierarchy and naming convention is shown below:
 
@@ -82,7 +82,7 @@ The UPose API gets the 3D coordinates of the corresponding human joints from the
               - RightHand
 ```
 
-## How to run
+## ▶️ How to run
 
 The motion tracking methods are implemented in Python and stream the data to Unity. 
 To install Python and the motion tracking libraries please refer to the installation guide below.
@@ -103,7 +103,7 @@ Keep the python program running while using UPose in Unity to see the motion cap
 
 Enjoy! 🧍🏃‍♂️🕺
 
-## Installation
+## ⚙️ Installation
 
 ### MediaPipe
 The mediapipe tracking works in Python. It is recomended that you install miniconda, a minimal version of Anaconda, in order to keep the python setup of this project separate from other python installations in your computer. https://www.anaconda.com/docs/getting-started/miniconda/install
@@ -137,7 +137,7 @@ conda activate openmmlab
 ```
 
 
-## Credits
+## 🤝 Credits
 
 ### Assets
 - Solder.glb - MIT License - https://github.com/mrdoob/three.js/blob/dev/examples/models/gltf/Soldier.glb
