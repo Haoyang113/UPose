@@ -13,7 +13,7 @@ You can use the UPose framework as a setup for your own projects, as an experime
 ## ✍ Cite as
 If you use this repository in your research please cite as:
 
-`UPose - AI motion tracking for Unity [Computer software]. GitHub, 2023. https://github.com/digitalworlds/UPose`
+`UPose - AI motion tracking for Unity [Computer software]. Digital Worlds Institute, 2023. https://github.com/digitalworlds/UPose`
 
 ## 📔 Contents
 ### Demo 1 - 🏃‍♂️ Exercise Room
@@ -58,11 +58,50 @@ Quaternion rotation=pose.GetRotation(Landmark.LEFT_ELBOW);
 LeftForeArm.localRotation=rotation;
 ```
 
-## Prerequisites
+## Skeletal Structure
+UPose supports avatars with the standard human IK skeleton. Avatars with this structure can be created using tools such as readyplayer.me.
+The UPose API gets the 3D coordinates of the corresponding human joints from the motion tracking source (MediaPipe, MMPose, etc.) and it calculates joint rotations that can be then assigned as localRotations to the corresponding bones of the skeleton. The bone hierarchy and naming convention is shown below:
+
+```
+- Hips
+  - Spine
+    - Spine1
+      - Spine2
+        - Neck
+          - Head
+            - HeadTop_End
+            - LeftEye
+            - RightEye
+        - LeftShoulder
+          - LeftArm
+            - LeftForeArm
+              - LeftHand
+        - RightShoulder
+          - RightArm
+            - RightForeArm
+              - RightHand
+```
+
+## How to run
 
 The motion tracking methods are implemented in Python and stream the data to Unity. 
-In addition to installing Unity and Python, please refer to the installation guide for additional requirements of specific motion tracking libraries.
+To install Python and the motion tracking libraries please refer to the installation guide below.
+Once you complete the installation, you can run UPose with the following steps:
 
+### Step 1 - Start the Motion Tracking Steam
+To run mediapipe go into the folder `GitHub/UPose/MotionCapture/mediapipe` and run:
+```
+conda activate mediapipe
+python main.py
+```
+This program will attempt to connect to Unity and stream the motion capture data to your Unity project. You can close the python project by pressing the escape button on the camera window.
+
+### Step 2 - Run a Unity Demo Scene
+Open in Unity the project `GitHub/UPose/UPose` and select one of the sample scenes provided in the UPose framework. The sample scenes can be found in the Unity project folder `Assets/Scenes`.
+
+Keep the python program running while using UPose in Unity to see the motion capture data in action!
+
+Enjoy! 🧍🏃‍♂️🕺
 
 ## Installation
 
@@ -88,13 +127,8 @@ conda activate mediapipe
 Then you can install the dependencies of this project:
 ```
 pip install opencv-python mediapipe
+conda deactivate
 ```
-
-Finally to run mediapipe go into the folder `MotionCapture/mediapipe` and run:
-```
-python main.py
-```
-This program will attempt to connect to Unity and stream the motion capture data to your Unity project. Keep the python program running and start the UPose Unity project to see the motion capture data in action!
 
 ### MMPose
 ```
