@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.ProBuilder.MeshOperations;
 
 
 [DefaultExecutionOrder(-1)]
@@ -98,22 +99,17 @@ public class MotionTracking : MonoBehaviour, MotionTrackingPose
         
         Vector3 localDirection = Quaternion.Inverse(base_rotation) * direction;
 
-        //Right Shoulder
-        //float rotZ=-Mathf.Acos(localDirection.y)*Mathf.Rad2Deg;
-        //float rotY=Mathf.Atan2(-localDirection.z,localDirection.x)*Mathf.Rad2Deg;
-        //b.instances[bone1].transform.localRotation = base_rotation*Quaternion.Euler(0,rotY,rotZ);
-        //Left Shoulder
-        //float rotZ=Mathf.Acos(localDirection.y)*Mathf.Rad2Deg;
-        //float rotY=Mathf.Atan2(localDirection.z,-localDirection.x)*Mathf.Rad2Deg;
-        //b.instances[bone1].transform.localRotation = base_rotation*Quaternion.Euler(0,rotY,rotZ);
-
-
-        //float rotZ = Mathf.Asin(-localDirection.x) * Mathf.Rad2Deg;
-        //float rotX = Mathf.Atan2(localDirection.z, localDirection.y) * Mathf.Rad2Deg;
-        //b.instances[bone1].transform.localRotation = base_rotation*Quaternion.Euler(rotX,0,rotZ);
- 
-        float rotY = -Mathf.Asin(localDirection.z) * Mathf.Rad2Deg;
-        float rotZ = Mathf.Atan2(localDirection.y, localDirection.x) * Mathf.Rad2Deg-90;
+        float rotZ=0;
+        float rotY=0;
+        if(left){
+            rotZ = -Mathf.Asin(localDirection.y) * Mathf.Rad2Deg+90;
+            rotY = Mathf.Atan2(localDirection.z, -localDirection.x) * Mathf.Rad2Deg;
+        }
+        else{
+            rotZ = Mathf.Asin(localDirection.y) * Mathf.Rad2Deg-90;
+            rotY = -Mathf.Atan2(localDirection.z, localDirection.x) * Mathf.Rad2Deg;
+        }
+        
         
         if(rotZ<-180)rotZ+=360;
         
@@ -259,7 +255,6 @@ public class MotionTracking : MonoBehaviour, MotionTrackingPose
         
         b.UpdateLines();
 
-
         b.rotations[(int)Landmark.PELVIS]=GetLandmark(Landmark.PELVIS).localRotation;
         b.rotations[(int)Landmark.SHOULDER_CENTER]=Quaternion.Inverse(GetLandmark(Landmark.PELVIS).localRotation)*GetLandmark(Landmark.SHOULDER_CENTER).localRotation;
         b.rotations[(int)Landmark.LEFT_SHOULDER]=Quaternion.Inverse(GetLandmark(Landmark.SHOULDER_CENTER).localRotation)*GetLandmark(Landmark.LEFT_SHOULDER).localRotation;
@@ -277,6 +272,10 @@ public class MotionTracking : MonoBehaviour, MotionTrackingPose
     public Quaternion GetRotation(Landmark i)
     {
         return body.rotations[(int)i];
+    }
+    public Quaternion GetRotation(Landmark i,int Delay)
+    {
+        return GetRotation(i);
     }
     public void SetVisible(bool visible)
     {

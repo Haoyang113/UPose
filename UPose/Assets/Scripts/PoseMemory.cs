@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PoseMemory : MonoBehaviour
+public class PoseMemory : MonoBehaviour, MotionTrackingPose
 {
     private MotionTracking server;
 
@@ -109,6 +109,13 @@ public class PoseMemory : MonoBehaviour
             return Quaternion.identity;
             break;
         }
+    }
 
+    public Quaternion GetRotation(Landmark landmark){
+        return GetRotation(landmark,0);
+    }
+
+    public long getFrameCounter(){
+        return previous_frame;
     }
 }

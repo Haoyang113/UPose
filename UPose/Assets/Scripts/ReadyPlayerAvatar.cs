@@ -8,7 +8,7 @@ using System;
 public class ReadyPlayerAvatar : MonoBehaviour
 {
 
-    private PoseMemory server;
+    private MotionTrackingPose server;
 
     public int Delay=0;
 
@@ -42,7 +42,12 @@ public class ReadyPlayerAvatar : MonoBehaviour
         server = FindFirstObjectByType<PoseMemory>();
         if (server == null)
         {
-            Debug.LogError("You must have a MotionTracking server in the scene!");
+            server = FindFirstObjectByType<MotionTracking>();
+            if(server == null)
+            {
+                Debug.LogError("You must have a MotionTracking server in the scene!");
+                return;
+            }
         }
 
         InitializeAvatar();
