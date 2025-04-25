@@ -13,7 +13,7 @@ You can use the UPose framework as a setup for your own projects, as an experime
 ## ✍ Cite as
 If you use this repository in your research please cite as:
 
-`UPose - AI motion tracking for Unity [Computer software]. Digital Worlds Institute, 2023. https://github.com/digitalworlds/UPose`
+`UPose - AI motion tracking for Unity [Computer software]. Digital Worlds Institute, 2025. https://github.com/digitalworlds/UPose`
 
 ## 📔 Contents
 ### Demo 1 - 🏃‍♂️ Exercise Room
