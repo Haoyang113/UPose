@@ -144,6 +144,7 @@ conda activate openmmlab
 - avatar.glb - CC-NC-SA 4.0 - https://github.com/Surbh77/AI-teacher/blob/main/avatar.glb
 - avatar1.glb - CC-NC-SA 4.0 - https://github.com/Surbh77/AI-teacher/blob/main/avatar1.glb
 - 67d411b30787acbf58ce58ac.glb - CC-NC-SA 4.0 - https://models.readyplayer.me/67d411b30787acbf58ce58ac.glb
+- 67f433b69dc08cf26d2cf585.glb - CC-NC-SA 4.0 - https://github.com/digitalworlds/UPose/blob/main/Assets/67f433b69dc08cf26d2cf585.glb
 - LowPoly Environment Pack - https://assetstore.unity.com/packages/3d/environments/landscapes/lowpoly-environment-pack-99479#description
 - Military Target - https://skfb.ly/6BWMT
 - Interior House Assets - https://assetstore.unity.com/packages/3d/environments/interior-house-assets-urp-257122
