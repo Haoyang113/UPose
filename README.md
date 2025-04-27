@@ -146,3 +146,5 @@ conda activate openmmlab
 - 67d411b30787acbf58ce58ac.glb - CC-NC-SA 4.0 - https://models.readyplayer.me/67d411b30787acbf58ce58ac.glb
 - LowPoly Environment Pack - https://assetstore.unity.com/packages/3d/environments/landscapes/lowpoly-environment-pack-99479#description
 - Military Target - https://skfb.ly/6BWMT
+- Interior House Assets - https://assetstore.unity.com/packages/3d/environments/interior-house-assets-urp-257122
+- Sleek essential UI pack - https://assetstore.unity.com/packages/2d/gui/icons/sleek-essential-ui-pack-170650
