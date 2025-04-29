@@ -149,3 +149,5 @@ conda activate openmmlab
 - Military Target - https://skfb.ly/6BWMT
 - Interior House Assets - https://assetstore.unity.com/packages/3d/environments/interior-house-assets-urp-257122
 - Sleek essential UI pack - https://assetstore.unity.com/packages/2d/gui/icons/sleek-essential-ui-pack-170650
+- Mountain - Stylized Fantasy Environment - https://assetstore.unity.com/packages/3d/environments/landscapes/mountain-stylized-fantasy-environment-307488
+- 
