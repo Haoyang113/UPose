@@ -138,16 +138,19 @@ conda activate openmmlab
 
 
 ## 🤝 Credits
-
-### Assets
-- Solder.glb - MIT License - https://github.com/mrdoob/three.js/blob/dev/examples/models/gltf/Soldier.glb
+We would like to acknowledge the sources of assets we used in this project:
+- ServerUDP.cs - MIT License - https://github.com/ganeshsar/UnityPythonMediaPipeAvatar
+- 67d411b30787acbf58ce58ac.glb - CC-NC-SA 4.0 - https://models.readyplayer.me/67d411b30787acbf58ce58ac.glb
+- 67f433b69dc08cf26d2cf585.glb - CC-NC-SA 4.0 - https://models.readyplayer.me/67f433b69dc08cf26d2cf585.glb
+- 67e1b51ae11c93725e4395c9.glb - CC-NC-SA 4.0 - https://models.readyplayer.me/67e1b51ae11c93725e4395c9.glb
+- 67e20a7fc5f8c4a77988b853.glb - CC-NC-SA 4.0 - https://models.readyplayer.me/67e20a7fc5f8c4a77988b853.glb
+- 67e21d1a79ac9bcf81a46385.glb - CC-NC-SA 4.0 - https://models.readyplayer.me/67e21d1a79ac9bcf81a46385.glb
+- 67e21f3db6349f1f57421ba0.glb - CC-NC-SA 4.0 - https://models.readyplayer.me/67e21f3db6349f1f57421ba0.glb
 - avatar.glb - CC-NC-SA 4.0 - https://github.com/Surbh77/AI-teacher/blob/main/avatar.glb
 - avatar1.glb - CC-NC-SA 4.0 - https://github.com/Surbh77/AI-teacher/blob/main/avatar1.glb
-- 67d411b30787acbf58ce58ac.glb - CC-NC-SA 4.0 - https://models.readyplayer.me/67d411b30787acbf58ce58ac.glb
-- 67f433b69dc08cf26d2cf585.glb - CC-NC-SA 4.0 - https://github.com/digitalworlds/UPose/blob/main/Assets/67f433b69dc08cf26d2cf585.glb
-- LowPoly Environment Pack - https://assetstore.unity.com/packages/3d/environments/landscapes/lowpoly-environment-pack-99479#description
-- Military Target - https://skfb.ly/6BWMT
-- Interior House Assets - https://assetstore.unity.com/packages/3d/environments/interior-house-assets-urp-257122
-- Sleek essential UI pack - https://assetstore.unity.com/packages/2d/gui/icons/sleek-essential-ui-pack-170650
-- Mountain - Stylized Fantasy Environment - https://assetstore.unity.com/packages/3d/environments/landscapes/mountain-stylized-fantasy-environment-307488
-- 
+- LowPoly Environment Pack - Standard Unity Asset Store EULA - https://assetstore.unity.com/packages/3d/environments/landscapes/lowpoly-environment-pack-99479#description
+- Military Target - CC-BY 4.0 - https://sketchfab.com/3d-models/target-hackathon-tournament-e2f631c75c83440887d2613fe4aeb84c
+- Interior House Assets - Standard Unity Asset Store EULA - https://assetstore.unity.com/packages/3d/environments/interior-house-assets-urp-257122
+- Sleek essential UI pack - Standard Unity Asset Store EULA - https://assetstore.unity.com/packages/2d/gui/icons/sleek-essential-ui-pack-170650
+- Mountain Stylized Fantasy Environment - Standard Unity Asset Store EULA - https://assetstore.unity.com/packages/3d/environments/landscapes/mountain-stylized-fantasy-environment-307488
+
