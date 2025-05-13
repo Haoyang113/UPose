@@ -193,31 +193,19 @@ public class MotionTracking : MonoBehaviour, MotionTrackingPose
     
 
     public float getLeftElbowAngle(){
-        return CalculateBodyAngle(body,(int)Landmark.LEFT_ELBOW,(int)Landmark.LEFT_WRIST,(int)Landmark.LEFT_SHOULDER);
-    }
+        return Quaternion.Angle(Quaternion.identity, GetRotation(Landmark.LEFT_ELBOW));
+     }
 
     public float getRightElbowAngle(){
-        return CalculateBodyAngle(body,(int)Landmark.RIGHT_ELBOW,(int)Landmark.RIGHT_WRIST,(int)Landmark.RIGHT_SHOULDER);
+        return Quaternion.Angle(Quaternion.identity, GetRotation(Landmark.RIGHT_ELBOW));
     }
 
     public float getLeftKneeAngle(){
-        return CalculateBodyAngle(body,(int)Landmark.LEFT_KNEE,(int)Landmark.LEFT_ANKLE,(int)Landmark.LEFT_HIP);
+        return Quaternion.Angle(Quaternion.identity, GetRotation(Landmark.LEFT_KNEE));
     }
 
     public float getRightKneeAngle(){
-        return CalculateBodyAngle(body,(int)Landmark.RIGHT_KNEE,(int)Landmark.RIGHT_ANKLE,(int)Landmark.RIGHT_HIP);
-    }
-
-    private float CalculateBodyAngle(Body b, int bone1, int bone2, int bone3)
-    {
-        Vector3 p1=b.instances[bone1].transform.localPosition;
-        Vector3 p2=b.instances[bone2].transform.localPosition;
-        Vector3 p3=b.instances[bone3].transform.localPosition;
-
-        Vector3 p21 = (p2-p1).normalized;
-        Vector3 p32 = (p3-p1).normalized;
-        
-       return Vector3.Angle(p21, p32);
+        return Quaternion.Angle(Quaternion.identity, GetRotation(Landmark.RIGHT_KNEE));
     }
 
 
@@ -307,15 +295,15 @@ public class MotionTracking : MonoBehaviour, MotionTrackingPose
 
         Landmark[] mr=new Landmark[10];
         mr[0]=Landmark.PELVIS;
-        mr[1]=Landmark.SPINE;
+        mr[1]=Landmark.SHOULDER_CENTER;
         mr[2]=Landmark.LEFT_SHOULDER;
         mr[3]=Landmark.RIGHT_SHOULDER;
         mr[4]=Landmark.LEFT_ELBOW;
         mr[5]=Landmark.RIGHT_ELBOW;
         mr[6]=Landmark.LEFT_HIP;
         mr[7]=Landmark.RIGHT_HIP;
-        mr[8]=Landmark.LEFT_ELBOW;
-        mr[9]=Landmark.RIGHT_ELBOW;
+        mr[8]=Landmark.LEFT_KNEE;
+        mr[9]=Landmark.RIGHT_KNEE;
 
         Landmark[] m=new Landmark[17];
         m[0]=Landmark.PELVIS;
@@ -363,47 +351,49 @@ public class MotionTracking : MonoBehaviour, MotionTrackingPose
                         if(s.Length==5 && float.Parse(s[4])>0.5) h.positionsBuffer[(int)mr[i]].visible=true;
                     }
                 }
-                else
-                foreach (string l in lines)
-                {
-                    if (string.IsNullOrWhiteSpace(l))
-                        continue;
-                    string[] s = l.Split('|');
-                    if (s.Length < 4) continue;
-                    int i;
-                    if (!int.TryParse(s[0], out i)) continue;
-                    
-                    if(MMPose)
+                else if(lines[0].CompareTo("mpxyz")==0){
+                    h.format=1;
+                    foreach (string l in lines)
                     {
-                        i=(int)m[i];
-                        h.positionsBuffer[i].value = new Vector3(float.Parse(s[1]), -float.Parse(s[2]), float.Parse(s[3]));
-                        if(s.Length==5 && float.Parse(s[4])>0.5) h.positionsBuffer[i].visible=true;
-                        else h.positionsBuffer[i].visible=false;
+                        if (string.IsNullOrWhiteSpace(l))
+                            continue;
+                        string[] s = l.Split('|');
+                        if (s.Length < 4) continue;
+                        int i;
+                        if (!int.TryParse(s[0], out i)) continue;
+                        
+                        if(MMPose)
+                        {
+                            i=(int)m[i];
+                            h.positionsBuffer[i].value = new Vector3(float.Parse(s[1]), -float.Parse(s[2]), float.Parse(s[3]));
+                            if(s.Length==5 && float.Parse(s[4])>0.5) h.positionsBuffer[i].visible=true;
+                            else h.positionsBuffer[i].visible=false;
+                        }
+                        else {
+                            h.positionsBuffer[i].value = new Vector3(float.Parse(s[1]), -float.Parse(s[2]), -float.Parse(s[3]));
+                            if(s.Length==5 && float.Parse(s[4])>0.5) h.positionsBuffer[i].visible=true;
+                            else h.positionsBuffer[i].visible=false;
+                        }
+                        
+                        h.positionsBuffer[i].accumulatedValuesCount = 1;
+                        
+                        h.active = true;
                     }
-                    else {
-                        h.positionsBuffer[i].value = new Vector3(float.Parse(s[1]), -float.Parse(s[2]), -float.Parse(s[3]));
-                        if(s.Length==5 && float.Parse(s[4])>0.5) h.positionsBuffer[i].visible=true;
-                        else h.positionsBuffer[i].visible=false;
+
+                    if(!MMPose){
+                        if(h.positionsBuffer[(int)Landmark.LEFT_HIP].visible && h.positionsBuffer[(int)Landmark.RIGHT_HIP].visible)
+                        {
+                            h.positionsBuffer[(int)Landmark.PELVIS].value=(h.positionsBuffer[(int)Landmark.LEFT_HIP].value+h.positionsBuffer[(int)Landmark.RIGHT_HIP].value)/2;
+                            h.positionsBuffer[(int)Landmark.PELVIS].visible=true;
+                        }else h.positionsBuffer[(int)Landmark.PELVIS].visible=false;
+
+                        if(h.positionsBuffer[(int)Landmark.LEFT_SHOULDER].visible && h.positionsBuffer[(int)Landmark.RIGHT_SHOULDER].visible)
+                        {
+                            h.positionsBuffer[(int)Landmark.SHOULDER_CENTER].value=(h.positionsBuffer[(int)Landmark.LEFT_SHOULDER].value+h.positionsBuffer[(int)Landmark.RIGHT_SHOULDER].value)/2;
+                            h.positionsBuffer[(int)Landmark.SHOULDER_CENTER].visible=true;
+                        }else h.positionsBuffer[(int)Landmark.SHOULDER_CENTER].visible=false;
+
                     }
-                    
-                    h.positionsBuffer[i].accumulatedValuesCount = 1;
-                    
-                    h.active = true;
-                }
-
-                if(!MMPose){
-                    if(h.positionsBuffer[(int)Landmark.LEFT_HIP].visible && h.positionsBuffer[(int)Landmark.RIGHT_HIP].visible)
-                    {
-                        h.positionsBuffer[(int)Landmark.PELVIS].value=(h.positionsBuffer[(int)Landmark.LEFT_HIP].value+h.positionsBuffer[(int)Landmark.RIGHT_HIP].value)/2;
-                        h.positionsBuffer[(int)Landmark.PELVIS].visible=true;
-                    }else h.positionsBuffer[(int)Landmark.PELVIS].visible=false;
-
-                    if(h.positionsBuffer[(int)Landmark.LEFT_SHOULDER].visible && h.positionsBuffer[(int)Landmark.RIGHT_SHOULDER].visible)
-                    {
-                        h.positionsBuffer[(int)Landmark.SHOULDER_CENTER].value=(h.positionsBuffer[(int)Landmark.LEFT_SHOULDER].value+h.positionsBuffer[(int)Landmark.RIGHT_SHOULDER].value)/2;
-                        h.positionsBuffer[(int)Landmark.SHOULDER_CENTER].visible=true;
-                    }else h.positionsBuffer[(int)Landmark.SHOULDER_CENTER].visible=false;
-
                 }
                 //Debug.Log("NEW DATA");
                 frame_counter+=1;

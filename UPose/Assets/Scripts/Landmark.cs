@@ -1,52 +1,3 @@
-#define FLIP // Comment out this line to flip the landmarks (internally).
-// NOTE: image = cv2.flip(image, 1) in the Python side may also be of interest to you as well.
-
-
-
-#if FLIP
-public enum Landmark
-{
-    NOSE = 0,
-    LEFT_EYE_INNER = 4,
-    LEFT_EYE = 5,
-    LEFT_EYE_OUTER = 6,
-    RIGHT_EYE_INNER = 1,
-    RIGHT_EYE = 2,
-    RIGHT_EYE_OUTER = 3,
-    LEFT_EAR = 8,
-    RIGHT_EAR = 7,
-    MOUTH_LEFT = 10,
-    MOUTH_RIGHT = 9,
-    LEFT_SHOULDER = 12,
-    RIGHT_SHOULDER = 11,
-    LEFT_ELBOW = 14,
-    RIGHT_ELBOW = 13,
-    LEFT_WRIST = 16,
-    RIGHT_WRIST = 15,
-    LEFT_PINKY = 18,
-    RIGHT_PINKY = 17,
-    LEFT_INDEX = 20,
-    RIGHT_INDEX = 19,
-    LEFT_THUMB = 22,
-    RIGHT_THUMB = 21,
-    LEFT_HIP = 24,
-    RIGHT_HIP = 23,
-    LEFT_KNEE = 26,
-    RIGHT_KNEE = 25,
-    LEFT_ANKLE = 28,
-    RIGHT_ANKLE = 27,
-    LEFT_HEEL = 30,
-    RIGHT_HEEL = 29,
-    LEFT_FOOT_INDEX = 32,
-    RIGHT_FOOT_INDEX = 31,
-    PELVIS = 33,
-    SPINE = 34,
-    SHOULDER_CENTER = 35,
-    NECK = 36,
-    HEAD = 37,
-    NONE = 40
-}
-#else
 public enum Landmark
 {
     NOSE = 0,
@@ -89,4 +40,3 @@ public enum Landmark
     HEAD = 37,
     NONE = 40
 }
-#endif

@@ -1,15 +1,60 @@
+# For more information and examples please visit:
+# https://github.com/digitalworlds/UPose/
+#
+#Example use:
+# pose_tracker = UPose(source="mediapipe",flipped=True)
+# pose_tracker.newFrame(mediapipe_results)
+# pelvis_rotation = pose_tracker.getPelvisRotation()
+# torso_rotation = pose_tracker.getTorsoRotation()
+# left_shoulder_rotation = pose_tracker.getLeftShoulderRotation()
+# right_shoulder_rotation = pose_tracker.getRightShoulderRotation()
+# left_elbow_rotation = pose_tracker.getLeftElbowRotation()
+# right_elbow_rotation = pose_tracker.getRightElbowRotation()
+# left_hip_rotation = pose_tracker.getLeftHipRotation()
+# right_hip_rotation = pose_tracker.getRightHipRotation()
+# left_knee_rotation = pose_tracker.getLeftKneeRotation()
+# right_knee_rotation = pose_tracker.getRightKneeRotation()
+
 import numpy as np
 import math
 import mediapipe as mp
 from scipy.spatial.transform import Rotation as R
 
 class UPose:
-    def __init__(self, source="mediapipe"):
+    def __init__(self, source="mediapipe", flipped=False):
         if source.lower() != "mediapipe":
             raise ValueError("Only 'mediapipe' source is supported currently.")
+        self.flipped = flipped
         self.source = source
         self.world_landmarks = None
         self.mp_pose = mp.solutions.pose
+        LM = self.mp_pose.PoseLandmark
+        if self.flipped:
+            self.LEFT_SHOULDER=LM.RIGHT_SHOULDER.value
+            self.RIGHT_SHOULDER=LM.LEFT_SHOULDER.value  
+            self.LEFT_ELBOW=LM.RIGHT_ELBOW.value
+            self.RIGHT_ELBOW=LM.LEFT_ELBOW.value 
+            self.LEFT_WRIST=LM.RIGHT_WRIST.value    
+            self.RIGHT_WRIST=LM.LEFT_WRIST.value 
+            self.LEFT_HIP=LM.RIGHT_HIP.value  
+            self.RIGHT_HIP=LM.LEFT_HIP.value
+            self.LEFT_KNEE=LM.RIGHT_KNEE.value    
+            self.RIGHT_KNEE=LM.LEFT_KNEE.value
+            self.LEFT_ANKLE=LM.RIGHT_ANKLE.value    
+            self.RIGHT_ANKLE=LM.LEFT_ANKLE.value   
+        else:     
+            self.LEFT_SHOULDER=LM.LEFT_SHOULDER.value
+            self.RIGHT_SHOULDER=LM.RIGHT_SHOULDER.value
+            self.LEFT_ELBOW=LM.LEFT_ELBOW.value
+            self.RIGHT_ELBOW=LM.RIGHT_ELBOW.value 
+            self.LEFT_WRIST=LM.LEFT_WRIST.value    
+            self.RIGHT_WRIST=LM.RIGHT_WRIST.value 
+            self.LEFT_HIP=LM.LEFT_HIP.value  
+            self.RIGHT_HIP=LM.RIGHT_HIP.value
+            self.LEFT_KNEE=LM.LEFT_KNEE.value    
+            self.RIGHT_KNEE=LM.RIGHT_KNEE.value
+            self.LEFT_ANKLE=LM.LEFT_ANKLE.value    
+            self.RIGHT_ANKLE=LM.RIGHT_ANKLE.value
         self.resetFrame()
 
     def resetFrame(self):
@@ -41,9 +86,8 @@ class UPose:
         if not self.world_landmarks:
             return None
 
-        LM = self.mp_pose.PoseLandmark
-        p1 = self._landmark_to_np(self.world_landmarks.landmark[LM.LEFT_HIP.value])
-        p2 = self._landmark_to_np(self.world_landmarks.landmark[LM.RIGHT_HIP.value])
+        p1 = self.getLandmark(self.LEFT_HIP)
+        p2 = self.getLandmark(self.RIGHT_HIP)
 
         direction = p2 - p1
         direction = direction / np.linalg.norm(direction)
@@ -57,10 +101,13 @@ class UPose:
         euler = np.array([0, -angle_deg, 0])
         local = R.from_euler('zxy',[0, 0, -angle_deg],degrees=True)
 
+        visibility = (self.getVisibility(self.LEFT_HIP)+self.getVisibility(self.RIGHT_HIP))/2
+
         self.pelvis_rotation = {
             "world": local,
             "local": local,
-            "euler": euler
+            "euler": euler,
+            "visibility": visibility
         }
 
         return self.pelvis_rotation
@@ -75,10 +122,10 @@ class UPose:
 
         # Get landmarks
         LM = self.mp_pose.PoseLandmark
-        left_hip = self._landmark_to_np(self.world_landmarks.landmark[LM.LEFT_HIP.value])
-        right_hip = self._landmark_to_np(self.world_landmarks.landmark[LM.RIGHT_HIP.value])
-        left_shoulder = self._landmark_to_np(self.world_landmarks.landmark[LM.LEFT_SHOULDER.value])
-        right_shoulder = self._landmark_to_np(self.world_landmarks.landmark[LM.RIGHT_SHOULDER.value])
+        left_hip = self.getLandmark(self.LEFT_HIP)
+        right_hip = self.getLandmark(self.RIGHT_HIP)
+        left_shoulder = self.getLandmark(self.LEFT_SHOULDER)
+        right_shoulder = self.getLandmark(self.RIGHT_SHOULDER)
 
         # Compute midpoints
         pelvis = (left_hip + right_hip) / 2
@@ -105,10 +152,13 @@ class UPose:
         euler = np.array([rot_x, 0, rot_z])
         local = R.from_euler('zxy',[rot_z, rot_x, 0], degrees=True)
 
+        visibility = (self.getVisibility(self.LEFT_HIP)+self.getVisibility(self.RIGHT_HIP)+self.getVisibility(self.LEFT_SHOULDER)+self.getVisibility(self.RIGHT_SHOULDER))/4
+
         self.torso_rotation = {
             "world": base_rotation * local,
             "local": local,
-            "euler": euler
+            "euler": euler,
+            "visibility": visibility
         }
 
         return self.torso_rotation
@@ -123,8 +173,8 @@ class UPose:
 
         # Get landmarks
         LM = self.mp_pose.PoseLandmark
-        left_shoulder = self._landmark_to_np(self.world_landmarks.landmark[LM.LEFT_SHOULDER.value])
-        left_elbow = self._landmark_to_np(self.world_landmarks.landmark[LM.LEFT_ELBOW.value])
+        left_shoulder = self.getLandmark(self.LEFT_SHOULDER)
+        left_elbow = self.getLandmark(self.LEFT_ELBOW)
 
         direction = left_elbow - left_shoulder
         direction = direction / np.linalg.norm(direction)
@@ -147,10 +197,13 @@ class UPose:
         euler = np.array([0, rot_y, rot_z])
         local = R.from_euler('zxy', [rot_z, 0, rot_y], degrees=True)
 
+        visibility = (self.getVisibility(self.LEFT_SHOULDER)+self.getVisibility(self.LEFT_ELBOW))/2
+
         self.left_shoulder_rotation = {
             "euler": euler,
             "local": local,
-            "world": base_rotation*local
+            "world": base_rotation*local,
+            "visibility": visibility
         }
 
         return self.left_shoulder_rotation
@@ -165,8 +218,8 @@ class UPose:
 
         # Get landmarks
         LM = self.mp_pose.PoseLandmark
-        right_shoulder = self._landmark_to_np(self.world_landmarks.landmark[LM.RIGHT_SHOULDER.value])
-        right_elbow = self._landmark_to_np(self.world_landmarks.landmark[LM.RIGHT_ELBOW.value])
+        right_shoulder = self.getLandmark(self.RIGHT_SHOULDER)
+        right_elbow = self.getLandmark(self.RIGHT_ELBOW)
 
         direction = right_elbow - right_shoulder
         direction = direction / np.linalg.norm(direction)
@@ -189,10 +242,13 @@ class UPose:
         euler = np.array([0, rot_y, rot_z])
         local = R.from_euler('zxy', [rot_z, 0, rot_y], degrees=True)
 
+        visibility = (self.getVisibility(self.RIGHT_SHOULDER)+self.getVisibility(self.RIGHT_ELBOW))/2
+
         self.right_shoulder_rotation = {
             "euler": euler,
             "local": local,
-            "world": base_rotation*local
+            "world": base_rotation*local,
+            "visibility": visibility
         }
 
         return self.right_shoulder_rotation
@@ -206,8 +262,8 @@ class UPose:
             return None
 
         LM = self.mp_pose.PoseLandmark
-        elbow = self._landmark_to_np(self.world_landmarks.landmark[LM.LEFT_ELBOW.value])
-        wrist = self._landmark_to_np(self.world_landmarks.landmark[LM.LEFT_WRIST.value])
+        elbow = self.getLandmark(self.LEFT_ELBOW)
+        wrist = self.getLandmark(self.LEFT_WRIST)
         shoulder_rot = self.getLeftShoulderRotation()
        
 
@@ -226,10 +282,13 @@ class UPose:
         euler = np.array([rot_x, 0, rot_z])
         local = R.from_euler('zxy', [rot_z, rot_x, 0], degrees=True)
 
+        visibility = (self.getVisibility(self.LEFT_ELBOW)+self.getVisibility(self.LEFT_WRIST))/2
+
         self.left_elbow_rotation= {
             "euler": euler,
             "local": local,
-            "world": base_rotation * local
+            "world": base_rotation * local,
+            "visibility": visibility
         }
 
         return self.left_elbow_rotation
@@ -243,8 +302,8 @@ class UPose:
             return None
 
         LM = self.mp_pose.PoseLandmark
-        elbow = self._landmark_to_np(self.world_landmarks.landmark[LM.RIGHT_ELBOW.value])
-        wrist = self._landmark_to_np(self.world_landmarks.landmark[LM.RIGHT_WRIST.value])
+        elbow = self.getLandmark(self.RIGHT_ELBOW)
+        wrist = self.getLandmark(self.RIGHT_WRIST)
         shoulder_rot = self.getRightShoulderRotation()
 
         if shoulder_rot is None:
@@ -262,10 +321,13 @@ class UPose:
         euler = np.array([rot_x, 0, rot_z])
         local = R.from_euler('zxy', [rot_z, rot_x, 0], degrees=True)
 
+        visibility = (self.getVisibility(self.RIGHT_ELBOW)+self.getVisibility(self.RIGHT_WRIST))/2
+
         self.right_elbow_rotation= {
             "euler": euler,
             "local": local,
-            "world": base_rotation * local
+            "world": base_rotation * local,
+            "visibility": visibility
         }
 
         return self.right_elbow_rotation
@@ -278,8 +340,8 @@ class UPose:
             return None
 
         LM = self.mp_pose.PoseLandmark
-        left_hip = self._landmark_to_np(self.world_landmarks.landmark[LM.LEFT_HIP.value])
-        left_knee = self._landmark_to_np(self.world_landmarks.landmark[LM.LEFT_KNEE.value])
+        left_hip = self.getLandmark(self.LEFT_HIP)
+        left_knee = self.getLandmark(self.LEFT_KNEE)
 
         direction = left_knee - left_hip
         direction = direction / np.linalg.norm(direction)
@@ -300,10 +362,13 @@ class UPose:
         euler = np.array([rot_x, 0, rot_z + 180])
         local = R.from_euler('zxy', [rot_z + 180, rot_x, 0], degrees=True)
 
+        visibility = (self.getVisibility(self.LEFT_HIP)+self.getVisibility(self.LEFT_KNEE))/2
+
         self.left_hip_rotation = {
             "euler": euler,
             "local": local,
-            "world": base_rotation * local
+            "world": base_rotation * local,
+            "visibility": visibility
         }
 
         return self.left_hip_rotation
@@ -316,8 +381,8 @@ class UPose:
             return None
 
         LM = self.mp_pose.PoseLandmark
-        right_hip = self._landmark_to_np(self.world_landmarks.landmark[LM.RIGHT_HIP.value])
-        right_knee = self._landmark_to_np(self.world_landmarks.landmark[LM.RIGHT_KNEE.value])
+        right_hip = self.getLandmark(self.RIGHT_HIP)
+        right_knee = self.getLandmark(self.RIGHT_KNEE)
 
         direction = right_knee - right_hip
         direction = direction / np.linalg.norm(direction)
@@ -338,10 +403,13 @@ class UPose:
         euler = np.array([rot_x, 0, rot_z + 180])
         local = R.from_euler('zxy', [rot_z + 180, rot_x, 0], degrees=True)
 
+        visibility = (self.getVisibility(self.RIGHT_HIP)+self.getVisibility(self.RIGHT_KNEE))/2
+
         self.right_hip_rotation = {
             "euler": euler,
             "local": local,
-            "world": base_rotation * local
+            "world": base_rotation * local,
+            "visibility": visibility
         }
 
         return self.right_hip_rotation
@@ -354,8 +422,8 @@ class UPose:
             return None
 
         LM = self.mp_pose.PoseLandmark
-        left_knee = self._landmark_to_np(self.world_landmarks.landmark[LM.LEFT_KNEE.value])
-        left_ankle = self._landmark_to_np(self.world_landmarks.landmark[LM.LEFT_ANKLE.value])
+        left_knee = self.getLandmark(self.LEFT_KNEE)
+        left_ankle = self.getLandmark(self.LEFT_ANKLE)
 
         direction = left_ankle - left_knee
         direction = direction / np.linalg.norm(direction)
@@ -373,10 +441,13 @@ class UPose:
         euler = np.array([rot_x, 0, rot_z])
         local = R.from_euler('zxy', [rot_z, rot_x, 0], degrees=True)
 
+        visibility = (self.getVisibility(self.LEFT_KNEE)+self.getVisibility(self.LEFT_ANKLE))/2
+
         self.left_knee_rotation = {
             "euler": euler,
             "local": local,
-            "world": base_rotation * local
+            "world": base_rotation * local,
+            "visibility": visibility
         }
 
         return self.left_knee_rotation
@@ -389,8 +460,8 @@ class UPose:
             return None
 
         LM = self.mp_pose.PoseLandmark
-        right_knee = self._landmark_to_np(self.world_landmarks.landmark[LM.RIGHT_KNEE.value])
-        right_ankle = self._landmark_to_np(self.world_landmarks.landmark[LM.RIGHT_ANKLE.value])
+        right_knee = self.getLandmark(self.RIGHT_KNEE)
+        right_ankle = self.getLandmark(self.RIGHT_ANKLE)
 
         direction = right_ankle - right_knee
         direction = direction / np.linalg.norm(direction)
@@ -408,14 +479,23 @@ class UPose:
         euler = np.array([rot_x, 0, rot_z])
         local = R.from_euler('zxy', [rot_z, rot_x, 0], degrees=True)
 
+        visibility = (self.getVisibility(self.RIGHT_KNEE)+self.getVisibility(self.RIGHT_ANKLE))/2
+
         self.right_knee_rotation = {
             "euler": euler,
             "local": local,
-            "world": base_rotation * local
+            "world": base_rotation * local,
+            "visibility": visibility
         }
 
         return self.right_knee_rotation
 
 
-    def _landmark_to_np(self, landmark):
-        return np.array([landmark.x, -landmark.y, -landmark.z])
+    def getLandmark(self, landmark):
+        if self.flipped:
+            return np.array([self.world_landmarks.landmark[landmark].x, -self.world_landmarks.landmark[landmark].y, -self.world_landmarks.landmark[landmark].z])
+        else:
+            return np.array([-self.world_landmarks.landmark[landmark].x, -self.world_landmarks.landmark[landmark].y, -self.world_landmarks.landmark[landmark].z])
+        
+    def getVisibility(self, landmark):
+        return self.world_landmarks.landmark[landmark].visibility
