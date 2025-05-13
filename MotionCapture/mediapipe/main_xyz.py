@@ -1,6 +1,7 @@
 import cv2
 import mediapipe as mp
 from clientUDP import ClientUDP
+import global_vars 
 import time
 from upose import UPose
 
@@ -9,12 +10,12 @@ mp_pose = mp.solutions.pose
 mp_drawing = mp.solutions.drawing_utils
 timeSincePostStatistics = 0
 
-client = ClientUDP('127.0.0.1',52733)
+client = ClientUDP(global_vars.HOST,global_vars.PORT)
 client.start()
 
 cap = cv2.VideoCapture(0)  # Open webcam
 
-with mp_pose.Pose(min_detection_confidence=0.80, min_tracking_confidence=0.5, model_complexity = 2, static_image_mode = False,enable_segmentation = True) as pose: 
+with mp_pose.Pose(min_detection_confidence=0.80, min_tracking_confidence=0.5, model_complexity = global_vars.MODEL_COMPLEXITY,static_image_mode = False,enable_segmentation = True) as pose: 
     while cap.isOpened():
         ti = time.time()
         success, image = cap.read()
@@ -43,7 +44,8 @@ with mp_pose.Pose(min_detection_confidence=0.80, min_tracking_confidence=0.5, mo
         if cv2.waitKey(5) & 0xFF == 27:
             break
 
-        data = "mprot\n"
+        data = ""
+        i = 0
         if results.pose_world_landmarks:
             #Calculate rotations
             pose_tracker.newFrame(results)
@@ -58,18 +60,6 @@ with mp_pose.Pose(min_detection_confidence=0.80, min_tracking_confidence=0.5, mo
             left_knee_rotation = pose_tracker.getLeftKneeRotation()
             right_knee_rotation = pose_tracker.getRightKneeRotation()
 
-            PoseLandmark=mp.solutions.pose.PoseLandmark
-            data += "{}|{}|{}|{}|{}\n".format(0,pelvis_rotation["euler"][0],pelvis_rotation["euler"][1],pelvis_rotation["euler"][2],1)
-            data += "{}|{}|{}|{}|{}\n".format(1,torso_rotation["euler"][0],torso_rotation["euler"][1],torso_rotation["euler"][2],1)
-            data += "{}|{}|{}|{}|{}\n".format(2,left_shoulder_rotation["euler"][0],left_shoulder_rotation["euler"][1],left_shoulder_rotation["euler"][2],1)
-            data += "{}|{}|{}|{}|{}\n".format(3,right_shoulder_rotation["euler"][0],right_shoulder_rotation["euler"][1],right_shoulder_rotation["euler"][2],1)
-            data += "{}|{}|{}|{}|{}\n".format(4,left_elbow_rotation["euler"][0],left_elbow_rotation["euler"][1],left_elbow_rotation["euler"][2],1)
-            data += "{}|{}|{}|{}|{}\n".format(5,right_elbow_rotation["euler"][0],right_elbow_rotation["euler"][1],right_elbow_rotation["euler"][2],1)
-            data += "{}|{}|{}|{}|{}\n".format(6,left_hip_rotation["euler"][0],left_hip_rotation["euler"][1],left_hip_rotation["euler"][2],1)
-            data += "{}|{}|{}|{}|{}\n".format(7,right_hip_rotation["euler"][0],right_hip_rotation["euler"][1],right_hip_rotation["euler"][2],1)
-            data += "{}|{}|{}|{}|{}\n".format(8,left_knee_rotation["euler"][0],left_knee_rotation["euler"][1],left_knee_rotation["euler"][2],1)
-            data += "{}|{}|{}|{}|{}\n".format(9,right_knee_rotation["euler"][0],right_knee_rotation["euler"][1],right_knee_rotation["euler"][2],1)
-
             #Print Euler angles
             #print("Pelvis rotation: %f %f %f" % (pelvis_rotation["euler"][0],pelvis_rotation["euler"][1],pelvis_rotation["euler"][2]))
             #print("Torso rotation: %f %f %f" % (torso_rotation["euler"][0],torso_rotation["euler"][1],torso_rotation["euler"][2]))
@@ -81,6 +71,11 @@ with mp_pose.Pose(min_detection_confidence=0.80, min_tracking_confidence=0.5, mo
             #print("Right Hip rotation: %f %f %f" % (right_hip_rotation["euler"][0],right_hip_rotation["euler"][1],right_hip_rotation["euler"][2]))
             #print("Left Knee rotation: %f %f %f" % (left_knee_rotation["euler"][0],left_knee_rotation["euler"][1],left_knee_rotation["euler"][2]))
             #print("Right Knee rotation: %f %f %f" % (right_knee_rotation["euler"][0],right_knee_rotation["euler"][1],right_knee_rotation["euler"][2]))
+
+
+            world_landmarks = results.pose_world_landmarks
+            for i in range(0,33):
+                data += "{}|{}|{}|{}|{}\n".format(i,world_landmarks.landmark[i].x,world_landmarks.landmark[i].y,world_landmarks.landmark[i].z,world_landmarks.landmark[i].visibility)
 
             client.sendMessage(data)
 

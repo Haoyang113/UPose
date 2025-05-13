@@ -142,8 +142,6 @@ public class MotionTracking : MonoBehaviour, MotionTrackingPose
         float rotZ = Mathf.Asin(-localDirection.x) * Mathf.Rad2Deg;
         float rotX = Mathf.Atan2(localDirection.z, localDirection.y) * Mathf.Rad2Deg;
         b.instances[bone1].transform.localRotation = base_rotation*Quaternion.Euler(rotX,0,rotZ);
- 
-
     }
 
     private void CalculateRotationThigh(Body b, int bone1, int bone2, int base_bone, bool left)
@@ -228,44 +226,48 @@ public class MotionTracking : MonoBehaviour, MotionTrackingPose
 
     private void UpdateBody(Body b)
     {
-        for (int i = 0; i < LANDMARK_COUNT; ++i)
-        {
-            b.positions[i] = b.positionsBuffer[i].value *multiplier;
-            b.instances[i].transform.localPosition=b.positions[i];
-            if(b.positionsBuffer[i].visible)
-            b.instances[i].GetComponent<Renderer>().enabled = true;
-            else b.instances[i].GetComponent<Renderer>().enabled = false;
+        if(b.format==1){
+            for (int i = 0; i < LANDMARK_COUNT; ++i)
+            {
+                b.positions[i] = b.positionsBuffer[i].value *multiplier;
+                b.instances[i].transform.localPosition=b.positions[i];
+                if(b.positionsBuffer[i].visible)
+                b.instances[i].GetComponent<Renderer>().enabled = true;
+                else b.instances[i].GetComponent<Renderer>().enabled = false;
+            }
+
+            CalculatePelvisRotation(b);
+            CalculateTorsoRotation(b);        
+            
+            CalculateRotationShoulder(b,(int)Landmark.RIGHT_SHOULDER,(int)Landmark.RIGHT_ELBOW,(int)Landmark.SHOULDER_CENTER,false);
+            CalculateRotationShoulder(b,(int)Landmark.LEFT_SHOULDER,(int)Landmark.LEFT_ELBOW,(int)Landmark.SHOULDER_CENTER,true);
+            
+            CalculateRotationElbow(b,(int)Landmark.RIGHT_ELBOW,(int)Landmark.RIGHT_WRIST,(int)Landmark.RIGHT_SHOULDER);        
+            CalculateRotationElbow(b,(int)Landmark.LEFT_ELBOW,(int)Landmark.LEFT_WRIST,(int)Landmark.LEFT_SHOULDER); 
+
+            CalculateRotationThigh(b,(int)Landmark.LEFT_HIP,(int)Landmark.LEFT_KNEE,(int)Landmark.PELVIS,true);        
+            CalculateRotationThigh(b,(int)Landmark.RIGHT_HIP,(int)Landmark.RIGHT_KNEE,(int)Landmark.PELVIS,false); 
+
+            CalculateRotationKnee(b,(int)Landmark.RIGHT_KNEE,(int)Landmark.RIGHT_ANKLE,(int)Landmark.RIGHT_HIP);        
+            CalculateRotationKnee(b,(int)Landmark.LEFT_KNEE,(int)Landmark.LEFT_ANKLE,(int)Landmark.LEFT_HIP); 
+
+            
+            b.UpdateLines();
+
+            b.rotations[(int)Landmark.PELVIS]=GetLandmark(Landmark.PELVIS).localRotation;
+            b.rotations[(int)Landmark.SHOULDER_CENTER]=Quaternion.Inverse(GetLandmark(Landmark.PELVIS).localRotation)*GetLandmark(Landmark.SHOULDER_CENTER).localRotation;
+            b.rotations[(int)Landmark.LEFT_SHOULDER]=Quaternion.Inverse(GetLandmark(Landmark.SHOULDER_CENTER).localRotation)*GetLandmark(Landmark.LEFT_SHOULDER).localRotation;
+            b.rotations[(int)Landmark.RIGHT_SHOULDER]=Quaternion.Inverse(GetLandmark(Landmark.SHOULDER_CENTER).localRotation)*GetLandmark(Landmark.RIGHT_SHOULDER).localRotation;
+            b.rotations[(int)Landmark.LEFT_ELBOW]=Quaternion.Inverse(GetLandmark(Landmark.LEFT_SHOULDER).localRotation)*GetLandmark(Landmark.LEFT_ELBOW).localRotation;
+            b.rotations[(int)Landmark.RIGHT_ELBOW]=Quaternion.Inverse(GetLandmark(Landmark.RIGHT_SHOULDER).localRotation)*GetLandmark(Landmark.RIGHT_ELBOW).localRotation;
+            b.rotations[(int)Landmark.LEFT_HIP]=Quaternion.Inverse(GetLandmark(Landmark.PELVIS).localRotation)*GetLandmark(Landmark.LEFT_HIP).localRotation;
+            b.rotations[(int)Landmark.RIGHT_HIP]=Quaternion.Inverse(GetLandmark(Landmark.PELVIS).localRotation)*GetLandmark(Landmark.RIGHT_HIP).localRotation;
+            b.rotations[(int)Landmark.LEFT_KNEE]=Quaternion.Inverse(GetLandmark(Landmark.LEFT_HIP).localRotation)*GetLandmark(Landmark.LEFT_KNEE).localRotation;
+            b.rotations[(int)Landmark.RIGHT_KNEE]=Quaternion.Inverse(GetLandmark(Landmark.RIGHT_HIP).localRotation)*GetLandmark(Landmark.RIGHT_KNEE).localRotation;
         }
+        else if(b.format==0){//mprot
 
-        CalculatePelvisRotation(b);
-        CalculateTorsoRotation(b);        
-        
-        CalculateRotationShoulder(b,(int)Landmark.RIGHT_SHOULDER,(int)Landmark.RIGHT_ELBOW,(int)Landmark.SHOULDER_CENTER,false);
-        CalculateRotationShoulder(b,(int)Landmark.LEFT_SHOULDER,(int)Landmark.LEFT_ELBOW,(int)Landmark.SHOULDER_CENTER,true);
-        
-        CalculateRotationElbow(b,(int)Landmark.RIGHT_ELBOW,(int)Landmark.RIGHT_WRIST,(int)Landmark.RIGHT_SHOULDER);        
-        CalculateRotationElbow(b,(int)Landmark.LEFT_ELBOW,(int)Landmark.LEFT_WRIST,(int)Landmark.LEFT_SHOULDER); 
-
-        CalculateRotationThigh(b,(int)Landmark.LEFT_HIP,(int)Landmark.LEFT_KNEE,(int)Landmark.PELVIS,true);        
-        CalculateRotationThigh(b,(int)Landmark.RIGHT_HIP,(int)Landmark.RIGHT_KNEE,(int)Landmark.PELVIS,false); 
-
-        CalculateRotationKnee(b,(int)Landmark.RIGHT_KNEE,(int)Landmark.RIGHT_ANKLE,(int)Landmark.RIGHT_HIP);        
-        CalculateRotationKnee(b,(int)Landmark.LEFT_KNEE,(int)Landmark.LEFT_ANKLE,(int)Landmark.LEFT_HIP); 
-
-        
-        b.UpdateLines();
-
-        b.rotations[(int)Landmark.PELVIS]=GetLandmark(Landmark.PELVIS).localRotation;
-        b.rotations[(int)Landmark.SHOULDER_CENTER]=Quaternion.Inverse(GetLandmark(Landmark.PELVIS).localRotation)*GetLandmark(Landmark.SHOULDER_CENTER).localRotation;
-        b.rotations[(int)Landmark.LEFT_SHOULDER]=Quaternion.Inverse(GetLandmark(Landmark.SHOULDER_CENTER).localRotation)*GetLandmark(Landmark.LEFT_SHOULDER).localRotation;
-        b.rotations[(int)Landmark.RIGHT_SHOULDER]=Quaternion.Inverse(GetLandmark(Landmark.SHOULDER_CENTER).localRotation)*GetLandmark(Landmark.RIGHT_SHOULDER).localRotation;
-        b.rotations[(int)Landmark.LEFT_ELBOW]=Quaternion.Inverse(GetLandmark(Landmark.LEFT_SHOULDER).localRotation)*GetLandmark(Landmark.LEFT_ELBOW).localRotation;
-        b.rotations[(int)Landmark.RIGHT_ELBOW]=Quaternion.Inverse(GetLandmark(Landmark.RIGHT_SHOULDER).localRotation)*GetLandmark(Landmark.RIGHT_ELBOW).localRotation;
-        b.rotations[(int)Landmark.LEFT_HIP]=Quaternion.Inverse(GetLandmark(Landmark.PELVIS).localRotation)*GetLandmark(Landmark.LEFT_HIP).localRotation;
-        b.rotations[(int)Landmark.RIGHT_HIP]=Quaternion.Inverse(GetLandmark(Landmark.PELVIS).localRotation)*GetLandmark(Landmark.RIGHT_HIP).localRotation;
-        b.rotations[(int)Landmark.LEFT_KNEE]=Quaternion.Inverse(GetLandmark(Landmark.LEFT_HIP).localRotation)*GetLandmark(Landmark.LEFT_KNEE).localRotation;
-        b.rotations[(int)Landmark.RIGHT_KNEE]=Quaternion.Inverse(GetLandmark(Landmark.RIGHT_HIP).localRotation)*GetLandmark(Landmark.RIGHT_KNEE).localRotation;
-        
+        }
 
     }
 
@@ -303,6 +305,18 @@ public class MotionTracking : MonoBehaviour, MotionTrackingPose
         server.StartListeningAsync();
         print("Listening @"+host+":"+port);        
 
+        Landmark[] mr=new Landmark[10];
+        mr[0]=Landmark.PELVIS;
+        mr[1]=Landmark.SPINE;
+        mr[2]=Landmark.LEFT_SHOULDER;
+        mr[3]=Landmark.RIGHT_SHOULDER;
+        mr[4]=Landmark.LEFT_ELBOW;
+        mr[5]=Landmark.RIGHT_ELBOW;
+        mr[6]=Landmark.LEFT_HIP;
+        mr[7]=Landmark.RIGHT_HIP;
+        mr[8]=Landmark.LEFT_ELBOW;
+        mr[9]=Landmark.RIGHT_ELBOW;
+
         Landmark[] m=new Landmark[17];
         m[0]=Landmark.PELVIS;
         m[1]=Landmark.LEFT_HIP;
@@ -338,6 +352,18 @@ public class MotionTracking : MonoBehaviour, MotionTrackingPose
                 
 
                 string[] lines = str.Split('\n');
+                if(lines[0].CompareTo("mprot")==0){
+                    h.format=0;
+                    for(int j=1;j<lines.Length;j++){
+                        string[] s=lines[j].Split('|');
+                        if (s.Length < 4) continue;
+                        int i;
+                        if (!int.TryParse(s[0], out i)) continue;
+                        h.rotations[(int)mr[i]]=Quaternion.Euler(float.Parse(s[1]),float.Parse(s[2]),float.Parse(s[3]));
+                        if(s.Length==5 && float.Parse(s[4])>0.5) h.positionsBuffer[(int)mr[i]].visible=true;
+                    }
+                }
+                else
                 foreach (string l in lines)
                 {
                     if (string.IsNullOrWhiteSpace(l))
@@ -418,6 +444,7 @@ public class MotionTracking : MonoBehaviour, MotionTrackingPose
 
     public class Body
     {
+        public int format=0;
         public Transform parent;
         public AccumulatedBuffer[] positionsBuffer = new AccumulatedBuffer[LANDMARK_COUNT];
         public Vector3[] positions = new Vector3[LANDMARK_COUNT];
