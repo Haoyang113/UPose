@@ -58,7 +58,7 @@ with mp_pose.Pose(min_detection_confidence=0.80, min_tracking_confidence=0.5, mo
             left_knee_rotation = pose_tracker.getLeftKneeRotation()
             right_knee_rotation = pose_tracker.getRightKneeRotation()
 
-
+            
             data += "{}|{}|{}|{}|{}\n".format(0,pelvis_rotation["euler"][0],pelvis_rotation["euler"][1],pelvis_rotation["euler"][2],pelvis_rotation["visibility"])
             data += "{}|{}|{}|{}|{}\n".format(1,torso_rotation["euler"][0],torso_rotation["euler"][1],torso_rotation["euler"][2],torso_rotation["visibility"])
             data += "{}|{}|{}|{}|{}\n".format(2,left_shoulder_rotation["euler"][0],left_shoulder_rotation["euler"][1],left_shoulder_rotation["euler"][2],left_shoulder_rotation["visibility"])

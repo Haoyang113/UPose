@@ -1,10 +1,18 @@
 # For more information and examples please visit:
 # https://github.com/digitalworlds/UPose/
 #
-#Example use:
+# Example use:
 # pose_tracker = UPose(source="mediapipe",flipped=True)
 # pose_tracker.newFrame(mediapipe_results)
+
+# Get rotations:
 # pelvis_rotation = pose_tracker.getPelvisRotation()
+# pelvis_rotation["world"] is world rotation
+# pelvis_rotation["local"] is local rotation
+# pelvis_rotation["euler"] is local rotation in Euler angles [x,y,z] that can be applied in zxy order to get the local rotation
+# pelvis_rotation["visibility"] is visibility of the joint between [0,1], where 1 means visible joint
+
+# Same for other rotations:
 # torso_rotation = pose_tracker.getTorsoRotation()
 # left_shoulder_rotation = pose_tracker.getLeftShoulderRotation()
 # right_shoulder_rotation = pose_tracker.getRightShoulderRotation()
@@ -14,6 +22,17 @@
 # right_hip_rotation = pose_tracker.getRightHipRotation()
 # left_knee_rotation = pose_tracker.getLeftKneeRotation()
 # right_knee_rotation = pose_tracker.getRightKneeRotation()
+
+# You can also get major body angles:
+# print("Pelvis Angle:", pose_tracker.getPelvisAngle())
+# print("Left Elbow Angle:", pose_tracker.getLeftElbowAngle())
+# print("Right Elbow Angle:", pose_tracker.getRightElbowAngle())
+# print("Left Knee Angle:", pose_tracker.getLeftKneeAngle())
+# print("Right Knee Angle:", pose_tracker.getRightKneeAngle())
+
+# You can also get all Euler angles in a vector:
+# print("Angle Vector: [" + ", ".join(f"{angle:.2f}" for angle in pose_tracker.getAngleVector()) + "]")
+# 0:pelvis 1,2:torso, 3,4:left_shoulder, 5,6:right_shoulder, 7,8:left_elbow, 9,10:right_elbow, 11,12:left_hip, 13,14:right_hip, 15,16:left_knee, 17,18:right_knee 
 
 import numpy as np
 import math
@@ -499,3 +518,53 @@ class UPose:
         
     def getVisibility(self, landmark):
         return self.world_landmarks.landmark[landmark].visibility
+    
+    def getPelvisAngle(self):
+        return self.getPelvisRotation()["euler"][1]
+
+    def getLeftElbowAngle(self):
+        return np.degrees(self.getLeftElbowRotation()["local"].magnitude())
+    
+    def getRightElbowAngle(self):
+        return np.degrees(self.getRightElbowRotation()["local"].magnitude())
+    
+    def getLeftKneeAngle(self):
+        return np.degrees(self.getLeftKneeRotation()["local"].magnitude())
+    
+    def getRightKneeAngle(self):
+        return np.degrees(self.getRightKneeRotation()["local"].magnitude())
+    
+    def getAngleVector(self):
+        pelvis_rotation = self.getPelvisRotation()
+        torso_rotation = self.getTorsoRotation()
+        left_shoulder_rotation = self.getLeftShoulderRotation()
+        right_shoulder_rotation = self.getRightShoulderRotation()
+        left_elbow_rotation = self.getLeftElbowRotation()
+        right_elbow_rotation = self.getRightElbowRotation()
+        left_hip_rotation = self.getLeftHipRotation()
+        right_hip_rotation = self.getRightHipRotation()
+        left_knee_rotation = self.getLeftKneeRotation()
+        right_knee_rotation = self.getRightKneeRotation()
+
+        angles = np.zeros(19)
+        angles[0] = pelvis_rotation["euler"][1]
+        angles[1] = torso_rotation["euler"][0]
+        angles[2] = torso_rotation["euler"][2]
+        angles[3] = left_shoulder_rotation["euler"][1]
+        angles[4] = left_shoulder_rotation["euler"][2]
+        angles[5] = right_shoulder_rotation["euler"][1]
+        angles[6] = right_shoulder_rotation["euler"][2]
+        angles[7] = left_elbow_rotation["euler"][0]
+        angles[8] = left_elbow_rotation["euler"][2]
+        angles[9] = right_elbow_rotation["euler"][0]
+        angles[10] = right_elbow_rotation["euler"][2]
+        angles[11] = left_hip_rotation["euler"][0]
+        angles[12] = left_hip_rotation["euler"][2]
+        angles[13] = right_hip_rotation["euler"][0]
+        angles[14] = right_hip_rotation["euler"][2]
+        angles[15] = left_knee_rotation["euler"][0]
+        angles[16] = left_knee_rotation["euler"][2]
+        angles[17] = right_knee_rotation["euler"][0]
+        angles[18] = right_knee_rotation["euler"][2]
+
+        return angles
