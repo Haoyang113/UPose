@@ -5,6 +5,7 @@ You can use the UPose framework as a setup for your own projects, as an experime
 ### Features
 - 🦾 MediaPipe human motion tracking
 - 🦿 MMPose human motion tracking
+- 📐 Compute joint rotations from mediapipe or other skeletal data
 - 💻 Simple API for accessing human pose data
 - 🧍 Standard Human IK skeleton support
 - ⌨️ Real-time data streaming from Python to Unity
@@ -92,7 +93,7 @@ Once you complete the installation, you can run UPose with the following steps:
 To run mediapipe go into the folder `GitHub/UPose/MotionCapture/mediapipe` and run:
 ```
 conda activate mediapipe
-python main.py
+python run_mediapipe.py
 ```
 This program will attempt to connect to Unity and stream the motion capture data to your Unity project. You can close the python project by pressing the escape button on the camera window.
 
