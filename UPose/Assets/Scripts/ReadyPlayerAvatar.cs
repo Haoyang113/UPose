@@ -133,9 +133,9 @@ public class ReadyPlayerAvatar : MonoBehaviour
             colliderHolder.AddComponent<KickForce>();
 
             LeftShoulder = GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "LeftShoulder");
-            
+            LeftShoulder.localRotation=Quaternion.Euler(0,0,90);
             LeftArm = GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "LeftArm");
-            LeftArm.localRotation=Quaternion.Euler(0,0,0);
+            
             LeftForeArm = GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "LeftForeArm");
             
             LeftHand=GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "LeftHand");
@@ -158,9 +158,9 @@ public class ReadyPlayerAvatar : MonoBehaviour
             colliderHolder.AddComponent<KickForce>();
 
             RightShoulder = GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "RightShoulder");
-            
+            RightShoulder.localRotation=Quaternion.Euler(0,0,-90);
             RightArm = GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "RightArm");
-            RightArm.localRotation=Quaternion.Euler(0,0,0);
+            
             RightForeArm = GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "RightForeArm");
             
             RightHand=GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "RightHand");
@@ -218,9 +218,9 @@ public class ReadyPlayerAvatar : MonoBehaviour
         //Get torso local rotation and apply it to the avatar
         Spine.localRotation=server.GetRotation(Landmark.SHOULDER_CENTER,Delay);
         //Get right upper arm rotation and apply it to the avatar
-        RightShoulder.localRotation=server.GetRotation(Landmark.RIGHT_SHOULDER,Delay);
+        RightArm.localRotation=Quaternion.Euler(0,0,90)*server.GetRotation(Landmark.RIGHT_SHOULDER,Delay);
         //Get left upper arm rotation and apply it to the avatar
-        LeftShoulder.localRotation=server.GetRotation(Landmark.LEFT_SHOULDER,Delay);
+        LeftArm.localRotation=Quaternion.Euler(0,0,-90)*server.GetRotation(Landmark.LEFT_SHOULDER,Delay);
         //Get left fore arm rotation and apply it to the avatar
         LeftForeArm.localRotation=server.GetRotation(Landmark.LEFT_ELBOW,Delay);
         //Get right fore arm rotation and apply it to the avatar
