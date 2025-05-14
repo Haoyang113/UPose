@@ -5,10 +5,13 @@ You can use the UPose framework as a setup for your own projects, as an experime
 ### Features
 - 🦾 MediaPipe human motion tracking
 - 🦿 MMPose human motion tracking
+- 📐 Compute joint rotations from mediapipe or other skeletal data
 - 💻 Simple API for accessing human pose data
 - 🧍 Standard Human IK skeleton support
 - ⌨️ Real-time data streaming from Python to Unity
 - 🏃 Several interactive demos included
+
+For more info on how UPose calculates joint angles from media pipe world coordinates [read our tutorial](UPose.md).
 
 ## ✍ Cite as
 If you use this repository in your research please cite as:
@@ -92,7 +95,7 @@ Once you complete the installation, you can run UPose with the following steps:
 To run mediapipe go into the folder `GitHub/UPose/MotionCapture/mediapipe` and run:
 ```
 conda activate mediapipe
-python main.py
+python run_mediapipe.py
 ```
 This program will attempt to connect to Unity and stream the motion capture data to your Unity project. You can close the python project by pressing the escape button on the camera window.
 
@@ -139,7 +142,7 @@ conda activate openmmlab
 
 ## 🤝 Credits
 We would like to acknowledge the sources of assets we used in this project:
-- ServerUDP.cs - MIT License - https://github.com/ganeshsar/UnityPythonMediaPipeAvatar
+- ServerUDP.cs and ClientUDP.py - MIT License - https://github.com/ganeshsar/UnityPythonMediaPipeAvatar
 - 67d411b30787acbf58ce58ac.glb - CC-NC-SA 4.0 - https://models.readyplayer.me/67d411b30787acbf58ce58ac.glb
 - 67f433b69dc08cf26d2cf585.glb - CC-NC-SA 4.0 - https://models.readyplayer.me/67f433b69dc08cf26d2cf585.glb
 - 67e1b51ae11c93725e4395c9.glb - CC-NC-SA 4.0 - https://models.readyplayer.me/67e1b51ae11c93725e4395c9.glb
@@ -153,4 +156,5 @@ We would like to acknowledge the sources of assets we used in this project:
 - Interior House Assets - Standard Unity Asset Store EULA - https://assetstore.unity.com/packages/3d/environments/interior-house-assets-urp-257122
 - Sleek essential UI pack - Standard Unity Asset Store EULA - https://assetstore.unity.com/packages/2d/gui/icons/sleek-essential-ui-pack-170650
 - Mountain Stylized Fantasy Environment - Standard Unity Asset Store EULA - https://assetstore.unity.com/packages/3d/environments/landscapes/mountain-stylized-fantasy-environment-307488
+- Grand Stadium v2.0 - Standard Unity Asset Store EULA - https://assetstore.unity.com/packages/3d/environments/urban/grand-stadium-v2-0-254584
 
