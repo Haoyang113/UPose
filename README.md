@@ -154,4 +154,5 @@ We would like to acknowledge the sources of assets we used in this project:
 - Interior House Assets - Standard Unity Asset Store EULA - https://assetstore.unity.com/packages/3d/environments/interior-house-assets-urp-257122
 - Sleek essential UI pack - Standard Unity Asset Store EULA - https://assetstore.unity.com/packages/2d/gui/icons/sleek-essential-ui-pack-170650
 - Mountain Stylized Fantasy Environment - Standard Unity Asset Store EULA - https://assetstore.unity.com/packages/3d/environments/landscapes/mountain-stylized-fantasy-environment-307488
+- Grand Stadium v2.0 - Standard Unity Asset Store EULA - https://assetstore.unity.com/packages/3d/environments/urban/grand-stadium-v2-0-254584
 
