@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class NewMonoBehaviourScript : MonoBehaviour
 {
-    WaterfallAvatar avatar;
+    ReadyPlayerAvatar avatar;
     bool initialized = false;
 
     public GameObject objectToHold_L;
@@ -11,7 +11,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        avatar = GetComponent<WaterfallAvatar>();
+        avatar = GetComponent<ReadyPlayerAvatar>();
     }
 
 
