@@ -140,7 +140,7 @@ conda activate openmmlab
 
 ## 🤝 Credits
 We would like to acknowledge the sources of assets we used in this project:
-- ServerUDP.cs - MIT License - https://github.com/ganeshsar/UnityPythonMediaPipeAvatar
+- ServerUDP.cs and ClientUDP.py - MIT License - https://github.com/ganeshsar/UnityPythonMediaPipeAvatar
 - 67d411b30787acbf58ce58ac.glb - CC-NC-SA 4.0 - https://models.readyplayer.me/67d411b30787acbf58ce58ac.glb
 - 67f433b69dc08cf26d2cf585.glb - CC-NC-SA 4.0 - https://models.readyplayer.me/67f433b69dc08cf26d2cf585.glb
 - 67e1b51ae11c93725e4395c9.glb - CC-NC-SA 4.0 - https://models.readyplayer.me/67e1b51ae11c93725e4395c9.glb
