@@ -384,6 +384,9 @@ public class MotionTracking : MonoBehaviour, MotionTrackingPose
                         h.rotations[(int)mr[i]]=Quaternion.Euler(float.Parse(s[1]),float.Parse(s[2]),float.Parse(s[3]));
                         if(s.Length==5 && float.Parse(s[4])>0.5) h.positionsBuffer[(int)mr[i]].visible=true;
                     }
+
+                    h.rotations[(int)Landmark.LEFT_SHOULDER]=Quaternion.Euler(0,0,90)*h.rotations[(int)Landmark.LEFT_SHOULDER];
+                    h.rotations[(int)Landmark.RIGHT_SHOULDER]=Quaternion.Euler(0,0,-90)*h.rotations[(int)Landmark.RIGHT_SHOULDER];
                 }
                 else if(lines[0].CompareTo("mpxyz")==0){
                     h.format=1;

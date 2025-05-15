@@ -218,7 +218,7 @@ class UPose:
 
         self.left_shoulder_rotation = {
             "euler": euler,
-            "local": local,
+            "local": R.from_euler('z', 90, degrees=True)*local,
             "world": base_rotation*R.from_euler('z', 90, degrees=True)*local,
             "visibility": visibility
         }
@@ -261,7 +261,7 @@ class UPose:
 
         self.right_shoulder_rotation = {
             "euler": euler,
-            "local": local,
+            "local": R.from_euler('z', -90, degrees=True)*local,
             "world": base_rotation*R.from_euler('z', -90, degrees=True)*local,
             "visibility": visibility
         }
