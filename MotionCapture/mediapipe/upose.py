@@ -295,11 +295,11 @@ class UPose:
         base_rotation = shoulder_rot["world"]
         local_direction = base_rotation.inv().apply(direction)
 
-        rot_z = math.asin(-local_direction[0]) * 180.0 / math.pi
-        rot_x = math.atan2(local_direction[2], local_direction[1]) * 180.0 / math.pi
+        rot_z = -math.acos(local_direction[1]) * 180.0 / math.pi
+        rot_y = math.atan2(-local_direction[2], local_direction[0]) * 180.0 / math.pi
 
-        euler = np.array([rot_x, 0, rot_z])
-        local = R.from_euler('zxy', [rot_z, rot_x, 0], degrees=True)
+        euler = np.array([0, rot_y, rot_z])
+        local = R.from_euler('zxy', [rot_z, 0, rot_y], degrees=True)
 
         visibility = (self.getVisibility(self.LEFT_ELBOW)+self.getVisibility(self.LEFT_WRIST))/2
 
@@ -334,11 +334,11 @@ class UPose:
         base_rotation = shoulder_rot["world"]
         local_direction = base_rotation.inv().apply(direction)
 
-        rot_z = math.asin(-local_direction[0]) * 180.0 / math.pi
-        rot_x = math.atan2(local_direction[2], local_direction[1]) * 180.0 / math.pi
+        rot_z = math.acos(local_direction[1]) * 180.0 / math.pi
+        rot_y = math.atan2(local_direction[2], -local_direction[0]) * 180.0 / math.pi
 
-        euler = np.array([rot_x, 0, rot_z])
-        local = R.from_euler('zxy', [rot_z, rot_x, 0], degrees=True)
+        euler = np.array([0, rot_y, rot_z])
+        local = R.from_euler('zxy', [rot_z, 0, rot_y], degrees=True)
 
         visibility = (self.getVisibility(self.RIGHT_ELBOW)+self.getVisibility(self.RIGHT_WRIST))/2
 
@@ -554,9 +554,9 @@ class UPose:
         angles[4] = left_shoulder_rotation["euler"][2]
         angles[5] = right_shoulder_rotation["euler"][1]
         angles[6] = right_shoulder_rotation["euler"][2]
-        angles[7] = left_elbow_rotation["euler"][0]
+        angles[7] = left_elbow_rotation["euler"][1]
         angles[8] = left_elbow_rotation["euler"][2]
-        angles[9] = right_elbow_rotation["euler"][0]
+        angles[9] = right_elbow_rotation["euler"][1]
         angles[10] = right_elbow_rotation["euler"][2]
         angles[11] = left_hip_rotation["euler"][0]
         angles[12] = left_hip_rotation["euler"][2]

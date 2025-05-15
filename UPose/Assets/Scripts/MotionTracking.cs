@@ -129,7 +129,7 @@ public class MotionTracking : MonoBehaviour, MotionTrackingPose
  
     }
 
-    private void CalculateRotationElbow(Body b, int bone1, int bone2, int base_bone)
+    private void CalculateRotationElbow(Body b, int bone1, int bone2, int base_bone, bool left)
     {
         Vector3 p1=b.instances[bone1].transform.localPosition;
         Vector3 p2=b.instances[bone2].transform.localPosition;
@@ -139,9 +139,21 @@ public class MotionTracking : MonoBehaviour, MotionTrackingPose
         
         Vector3 localDirection = Quaternion.Inverse(base_rotation) * direction;
         
-        float rotZ = Mathf.Asin(-localDirection.x) * Mathf.Rad2Deg;
-        float rotX = Mathf.Atan2(localDirection.z, localDirection.y) * Mathf.Rad2Deg;
-        b.instances[bone1].transform.localRotation = base_rotation*Quaternion.Euler(rotX,0,rotZ);
+        //float rotZ = Mathf.Asin(-localDirection.x) * Mathf.Rad2Deg;
+        //float rotX = Mathf.Atan2(localDirection.z, localDirection.y) * Mathf.Rad2Deg;
+        
+        float rotZ=0;
+        float rotY=0;
+        if(left){
+            rotZ = -Mathf.Acos(localDirection.y) * Mathf.Rad2Deg;
+            rotY = Mathf.Atan2(-localDirection.z, localDirection.x) * Mathf.Rad2Deg;
+        }
+        else{
+            rotZ = Mathf.Acos(localDirection.y) * Mathf.Rad2Deg;
+            rotY = Mathf.Atan2(localDirection.z,-localDirection.x) * Mathf.Rad2Deg;
+        }
+
+        b.instances[bone1].transform.localRotation = base_rotation*Quaternion.Euler(0,rotY,rotZ);
     }
 
     private void CalculateRotationThigh(Body b, int bone1, int bone2, int base_bone, bool left)
@@ -230,8 +242,8 @@ public class MotionTracking : MonoBehaviour, MotionTrackingPose
             CalculateRotationShoulder(b,(int)Landmark.RIGHT_SHOULDER,(int)Landmark.RIGHT_ELBOW,(int)Landmark.SHOULDER_CENTER,false);
             CalculateRotationShoulder(b,(int)Landmark.LEFT_SHOULDER,(int)Landmark.LEFT_ELBOW,(int)Landmark.SHOULDER_CENTER,true);
             
-            CalculateRotationElbow(b,(int)Landmark.RIGHT_ELBOW,(int)Landmark.RIGHT_WRIST,(int)Landmark.RIGHT_SHOULDER);        
-            CalculateRotationElbow(b,(int)Landmark.LEFT_ELBOW,(int)Landmark.LEFT_WRIST,(int)Landmark.LEFT_SHOULDER); 
+            CalculateRotationElbow(b,(int)Landmark.RIGHT_ELBOW,(int)Landmark.RIGHT_WRIST,(int)Landmark.RIGHT_SHOULDER,false);        
+            CalculateRotationElbow(b,(int)Landmark.LEFT_ELBOW,(int)Landmark.LEFT_WRIST,(int)Landmark.LEFT_SHOULDER,true); 
 
             CalculateRotationThigh(b,(int)Landmark.LEFT_HIP,(int)Landmark.LEFT_KNEE,(int)Landmark.PELVIS,true);        
             CalculateRotationThigh(b,(int)Landmark.RIGHT_HIP,(int)Landmark.RIGHT_KNEE,(int)Landmark.PELVIS,false); 
