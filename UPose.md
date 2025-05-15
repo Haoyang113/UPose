@@ -81,4 +81,13 @@ $`
 \begin{bmatrix}
 d_x \\ d_y \\ d_z
 \end{bmatrix}
-`$. Therefore, $`\psi = \arctan2(-d_x, d_y)`$ and $`\phi = \arctan2(d_z, d_y)`$.
+`$. Therefore, $`\psi = \arcsin(-d_x)`$ and $`\phi = \arctan2(d_z, d_y)`$. 
+
+So if we know the local direction of the bone then we can calculate the local rotation using the above formula.
+
+### How to calculate the local direction vectors?
+
+- Subtract the coresponding coordinates of the relevant joints from the mediapipe data, in our case: $`\vec{d} = \text{wrist} - \text{elbow}`$
+- Normalize the vector: $`\hat{d} = \frac{\vec{d}}{||\vec{d}||}`$
+- Finally, transform this direction into the local coordinate space of the parent joint, in this case the shoulder, by multiplying it with the world-space rotation of the shoulder: $`\vec{v}_{local} = R_{\text{shoulder}}^{-1} \cdot \hat{d}`$
+- Starting from the pelvis (hip center), which is the root of the bone sequence and there is no parent, the UPose library performs the above calculations and proceeds sequencially to the children joints. In this order, the rotations of the parent joints are always computed first, and therefore they can be used for calculating the local direction vectors of the children nodes.
