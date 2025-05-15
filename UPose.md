@@ -16,4 +16,27 @@ This tutorial explains how to calculate joint angles from the x,y,z coordinates 
 - For example in the image above, a rotation around the green circle corresponds to twisting the forearm, which may not be clear from just the x,y,z coordinates provided by mediapipe.
 
 ### How to calculate the other two angles?
+A rotation around z is expressed as:
+$`
+R_z(\psi) = 
+\begin{bmatrix}
+\cos\psi & -\sin\psi & 0 \\
+\sin\psi & \cos\psi & 0 \\
+0 & 0 & 1
+\end{bmatrix}
+`$
+
+and a rotation around x is expressed as:
+$`
+R_x(\phi) = 
+\begin{bmatrix}
+1 & 0 & 0 \\
+0 & \cos\phi & -\sin\phi \\
+0 & \sin\phi & \cos\phi
+\end{bmatrix}
+`$
+
+The order of rotations in Unity is ZXY which means that the total rotation would be $`R = R_y(\theta) \cdot R_x(\phi) \cdot R_z(\psi)`$ so in our case would be just
+
+
 <img src="Screenshots/joint_rotation.png" alt="Your Scene Name" width="600"/>
