@@ -205,23 +205,21 @@ class UPose:
         
         base_rotation = torso_rot["world"]
 
-        local_direction = base_rotation.inv().apply(direction)
+        local_direction = (base_rotation * R.from_euler('z', 90, degrees=True)).inv().apply(direction)
 
-        rot_z = -math.asin(local_direction[1]) * 180.0 / math.pi + 90
-        rot_y = math.atan2(local_direction[2], -local_direction[0]) * 180.0 / math.pi
+        rot_z = math.asin(-local_direction[0]) * 180.0 / math.pi
+        rot_x = math.atan2(local_direction[2], local_direction[1]) * 180.0 / math.pi
         
-        if rot_z < -180:
-            rot_z += 360
 
-        euler = np.array([0, rot_y, rot_z])
-        local = R.from_euler('zxy', [rot_z, 0, rot_y], degrees=True)
+        euler = np.array([rot_x, 0, rot_z])
+        local = R.from_euler('zxy', [rot_z, rot_x, 0], degrees=True)
 
         visibility = (self.getVisibility(self.LEFT_SHOULDER)+self.getVisibility(self.LEFT_ELBOW))/2
 
         self.left_shoulder_rotation = {
             "euler": euler,
             "local": local,
-            "world": base_rotation*local,
+            "world": base_rotation*R.from_euler('z', 90, degrees=True)*local,
             "visibility": visibility
         }
 
@@ -250,23 +248,21 @@ class UPose:
         
         base_rotation = torso_rot["world"]
 
-        local_direction = base_rotation.inv().apply(direction)
+        local_direction = (base_rotation * R.from_euler('z', -90, degrees=True)).inv().apply(direction)
 
-        rot_z = math.asin(local_direction[1]) * 180.0 / math.pi - 90
-        rot_y = -math.atan2(local_direction[2], local_direction[0]) * 180.0 / math.pi
+        rot_z = math.asin(-local_direction[0]) * 180.0 / math.pi
+        rot_x = math.atan2(local_direction[2], local_direction[1]) * 180.0 / math.pi
 
-        if rot_z < -180:
-            rot_z += 360
 
-        euler = np.array([0, rot_y, rot_z])
-        local = R.from_euler('zxy', [rot_z, 0, rot_y], degrees=True)
+        euler = np.array([rot_x, 0, rot_z])
+        local = R.from_euler('zxy', [rot_z, rot_x, 0], degrees=True)
 
         visibility = (self.getVisibility(self.RIGHT_SHOULDER)+self.getVisibility(self.RIGHT_ELBOW))/2
 
         self.right_shoulder_rotation = {
             "euler": euler,
             "local": local,
-            "world": base_rotation*local,
+            "world": base_rotation*R.from_euler('z', -90, degrees=True)*local,
             "visibility": visibility
         }
 
@@ -297,6 +293,15 @@ class UPose:
 
         rot_z = -math.acos(local_direction[1]) * 180.0 / math.pi
         rot_y = math.atan2(-local_direction[2], local_direction[0]) * 180.0 / math.pi
+
+        w = abs(rot_z)
+        if w < 20:
+            if w < 10:
+                # Between 10–0: rotY becomes 0
+                rot_y = 0
+            else:
+                # Between 20–10: linear interpolation from rotY to 0
+                rot_y = rot_y * (w - 10) / 10
 
         euler = np.array([0, rot_y, rot_z])
         local = R.from_euler('zxy', [rot_z, 0, rot_y], degrees=True)
@@ -336,6 +341,15 @@ class UPose:
 
         rot_z = math.acos(local_direction[1]) * 180.0 / math.pi
         rot_y = math.atan2(local_direction[2], -local_direction[0]) * 180.0 / math.pi
+
+        w = abs(rot_z)
+        if w < 20:
+            if w < 10:
+                # Between 10–0: rotY becomes 0
+                rot_y = 0
+            else:
+                # Between 20–10: linear interpolation from rotY to 0
+                rot_y = rot_y * (w - 10) / 10
 
         euler = np.array([0, rot_y, rot_z])
         local = R.from_euler('zxy', [rot_z, 0, rot_y], degrees=True)

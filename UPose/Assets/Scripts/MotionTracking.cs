@@ -97,7 +97,7 @@ public class MotionTracking : MonoBehaviour, MotionTrackingPose
 
         Vector3 direction = (p2 - p1).normalized;
         
-        Vector3 localDirection = Quaternion.Inverse(base_rotation) * direction;
+        /*Vector3 localDirection = Quaternion.Inverse(base_rotation) * direction;
 
         float rotZ=0;
         float rotY=0;
@@ -125,8 +125,19 @@ public class MotionTracking : MonoBehaviour, MotionTrackingPose
             
         }
 
-        b.instances[bone1].transform.localRotation = base_rotation*Quaternion.Euler(0,rotY,rotZ);
+        b.instances[bone1].transform.localRotation = base_rotation*Quaternion.Euler(0,rotY,rotZ);*/
  
+        if(left){
+            Vector3 localDirection = Quaternion.Inverse(base_rotation*Quaternion.Euler(0,0,90)) * direction;
+            float rotZ = Mathf.Asin(-localDirection.x) * Mathf.Rad2Deg;
+            float rotX = Mathf.Atan2(localDirection.z, localDirection.y) * Mathf.Rad2Deg;
+            b.instances[bone1].transform.localRotation = base_rotation*Quaternion.Euler(0,0,90)*Quaternion.Euler(rotX,0,rotZ);
+        }else{
+            Vector3 localDirection = Quaternion.Inverse(base_rotation*Quaternion.Euler(0,0,-90)) * direction;
+            float rotZ = Mathf.Asin(-localDirection.x) * Mathf.Rad2Deg;
+            float rotX = Mathf.Atan2(localDirection.z, localDirection.y) * Mathf.Rad2Deg;
+            b.instances[bone1].transform.localRotation = base_rotation*Quaternion.Euler(0,0,-90)*Quaternion.Euler(rotX,0,rotZ);
+        }
     }
 
     private void CalculateRotationElbow(Body b, int bone1, int bone2, int base_bone, bool left)
@@ -142,8 +153,8 @@ public class MotionTracking : MonoBehaviour, MotionTrackingPose
         //float rotZ = Mathf.Asin(-localDirection.x) * Mathf.Rad2Deg;
         //float rotX = Mathf.Atan2(localDirection.z, localDirection.y) * Mathf.Rad2Deg;
         
-        float rotZ=0;
-        float rotY=0;
+        float rotZ;
+        float rotY;
         if(left){
             rotZ = -Mathf.Acos(localDirection.y) * Mathf.Rad2Deg;
             rotY = Mathf.Atan2(-localDirection.z, localDirection.x) * Mathf.Rad2Deg;
@@ -152,6 +163,17 @@ public class MotionTracking : MonoBehaviour, MotionTrackingPose
             rotZ = Mathf.Acos(localDirection.y) * Mathf.Rad2Deg;
             rotY = Mathf.Atan2(localDirection.z,-localDirection.x) * Mathf.Rad2Deg;
         }
+
+        float w=Mathf.Abs(rotZ);
+        if(w<20){
+            if(w<10){//between 10-0 rotY=0
+                rotY=0;
+            }else{//between 20-10 linear interpolation from rotY to 0
+                rotY=rotY*(w-10)/10;
+            }
+        }
+
+        b.instances[base_bone].transform.localRotation=base_rotation*Quaternion.Euler(0,rotY,0);
 
         b.instances[bone1].transform.localRotation = base_rotation*Quaternion.Euler(0,rotY,rotZ);
     }
@@ -520,6 +542,8 @@ public class MotionTracking : MonoBehaviour, MotionTrackingPose
                 lines[i] = Instantiate(linePrefab).GetComponent<LineRenderer>();
                 lines[i].transform.parent = parent;
             }
+            rotations[(int)Landmark.RIGHT_HIP]=Quaternion.Euler(0,0,180);
+            rotations[(int)Landmark.LEFT_HIP]=Quaternion.Euler(0,0,180);
         }
         public void UpdateLines()
         {
