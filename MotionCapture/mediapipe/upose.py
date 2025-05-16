@@ -308,6 +308,8 @@ class UPose:
 
         visibility = (self.getVisibility(self.LEFT_ELBOW)+self.getVisibility(self.LEFT_WRIST))/2
 
+        #self.left_shoulder_rotation["local"]=self.left_shoulder_rotation["local"]*R.from_euler('zxy', [0, 0, rot_y], degrees=True)
+
         self.left_elbow_rotation= {
             "euler": euler,
             "local": local,
@@ -355,6 +357,8 @@ class UPose:
         local = R.from_euler('zxy', [rot_z, 0, rot_y], degrees=True)
 
         visibility = (self.getVisibility(self.RIGHT_ELBOW)+self.getVisibility(self.RIGHT_WRIST))/2
+
+        #self.right_shoulder_rotation["local"]=self.right_shoulder_rotation["local"]*R.from_euler('zxy', [0, 0, rot_y], degrees=True);
 
         self.right_elbow_rotation= {
             "euler": euler,
