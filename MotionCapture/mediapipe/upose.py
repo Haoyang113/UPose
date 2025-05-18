@@ -32,7 +32,12 @@
 
 # You can also get all Euler angles in a vector:
 # print("Angle Vector: [" + ", ".join(f"{angle:.2f}" for angle in pose_tracker.getAngleVector()) + "]")
-# 0:pelvis 1,2:torso, 3,4:left_shoulder, 5,6:right_shoulder, 7,8:left_elbow, 9,10:right_elbow, 11,12:left_hip, 13,14:right_hip, 15,16:left_knee, 17,18:right_knee 
+# 0:pelvis 1,2:torso, 3,4,5:left_shoulder, 6,7,8:right_shoulder, 9:left_elbow, 10:right_elbow, 11,12:left_hip, 13,14:right_hip, 15,16:left_knee, 17,18:right_knee 
+
+# You can also get all Quaternions in a vector:
+# print("Angle Vector: [" + ", ".join(f"{angle:.2f}" for angle in pose_tracker.getAngleVector(format="quaternions")) + "]")
+# 0-3:pelvis 4,7:torso, 8-11:left_shoulder, 12-15:right_shoulder, 16-19:left_elbow, 20-23:right_elbow, 24-27:left_hip, 28-31:right_hip, 32-35:left_knee, 36-39:right_knee 
+
 
 import numpy as np
 import math
@@ -303,12 +308,17 @@ class UPose:
                 # Between 20–10: linear interpolation from rotY to 0
                 rot_y = rot_y * (w - 10) / 10
 
-        euler = np.array([0, rot_y, rot_z])
-        local = R.from_euler('zxy', [rot_z, 0, rot_y], degrees=True)
+        #we do not use rot_y on the elbow
+        euler = np.array([0, 0, rot_z])
+        local = R.from_euler('zxy', [rot_z, 0, 0], degrees=True)
 
         visibility = (self.getVisibility(self.LEFT_ELBOW)+self.getVisibility(self.LEFT_WRIST))/2
 
-        #self.left_shoulder_rotation["local"]=self.left_shoulder_rotation["local"]*R.from_euler('zxy', [0, 0, rot_y], degrees=True)
+        #we use the rot_y on the shoulder instead
+        self.left_shoulder_rotation["local"]=self.left_shoulder_rotation["local"]*R.from_euler('zxy', [0, 0, rot_y], degrees=True)
+        self.left_shoulder_rotation["world"]=self.left_shoulder_rotation["world"]*R.from_euler('zxy', [0, 0, rot_y], degrees=True)
+        e = self.left_shoulder_rotation["local"].as_euler('zxy', degrees=True)
+        self.left_shoulder_rotation["euler"]=np.array([e[1], e[2], e[0]])
 
         self.left_elbow_rotation= {
             "euler": euler,
@@ -353,12 +363,17 @@ class UPose:
                 # Between 20–10: linear interpolation from rotY to 0
                 rot_y = rot_y * (w - 10) / 10
 
-        euler = np.array([0, rot_y, rot_z])
-        local = R.from_euler('zxy', [rot_z, 0, rot_y], degrees=True)
+        #we do not use rot_y on the elbow
+        euler = np.array([0, 0, rot_z])
+        local = R.from_euler('zxy', [rot_z, 0, 0], degrees=True)
 
         visibility = (self.getVisibility(self.RIGHT_ELBOW)+self.getVisibility(self.RIGHT_WRIST))/2
 
-        #self.right_shoulder_rotation["local"]=self.right_shoulder_rotation["local"]*R.from_euler('zxy', [0, 0, rot_y], degrees=True);
+        #we use the rot_y on the shoulder instead
+        self.right_shoulder_rotation["local"]=self.right_shoulder_rotation["local"]*R.from_euler('zxy', [0, 0, rot_y], degrees=True);
+        self.right_shoulder_rotation["world"]=self.right_shoulder_rotation["world"]*R.from_euler('zxy', [0, 0, rot_y], degrees=True);
+        e = self.right_shoulder_rotation["local"].as_euler('zxy', degrees=True)
+        self.right_shoulder_rotation["euler"]=np.array([e[1], e[2], e[0]])
 
         self.right_elbow_rotation= {
             "euler": euler,
@@ -552,37 +567,55 @@ class UPose:
     def getRightKneeAngle(self):
         return np.degrees(self.getRightKneeRotation()["local"].magnitude())
     
-    def getAngleVector(self):
-        pelvis_rotation = self.getPelvisRotation()
-        torso_rotation = self.getTorsoRotation()
-        left_shoulder_rotation = self.getLeftShoulderRotation()
-        right_shoulder_rotation = self.getRightShoulderRotation()
-        left_elbow_rotation = self.getLeftElbowRotation()
-        right_elbow_rotation = self.getRightElbowRotation()
-        left_hip_rotation = self.getLeftHipRotation()
-        right_hip_rotation = self.getRightHipRotation()
-        left_knee_rotation = self.getLeftKneeRotation()
-        right_knee_rotation = self.getRightKneeRotation()
+    def computeRotations(self):
+        self.getPelvisRotation()
+        self.getTorsoRotation()
+        self.getLeftElbowRotation()
+        self.getRightElbowRotation()
+        self.getLeftShoulderRotation()
+        self.getRightShoulderRotation()
+        self.getLeftHipRotation()
+        self.getRightHipRotation()
+        self.getLeftKneeRotation()
+        self.getRightKneeRotation()
 
-        angles = np.zeros(19)
-        angles[0] = pelvis_rotation["euler"][1]
-        angles[1] = torso_rotation["euler"][0]
-        angles[2] = torso_rotation["euler"][2]
-        angles[3] = left_shoulder_rotation["euler"][1]
-        angles[4] = left_shoulder_rotation["euler"][2]
-        angles[5] = right_shoulder_rotation["euler"][1]
-        angles[6] = right_shoulder_rotation["euler"][2]
-        angles[7] = left_elbow_rotation["euler"][1]
-        angles[8] = left_elbow_rotation["euler"][2]
-        angles[9] = right_elbow_rotation["euler"][1]
-        angles[10] = right_elbow_rotation["euler"][2]
-        angles[11] = left_hip_rotation["euler"][0]
-        angles[12] = left_hip_rotation["euler"][2]
-        angles[13] = right_hip_rotation["euler"][0]
-        angles[14] = right_hip_rotation["euler"][2]
-        angles[15] = left_knee_rotation["euler"][0]
-        angles[16] = left_knee_rotation["euler"][2]
-        angles[17] = right_knee_rotation["euler"][0]
-        angles[18] = right_knee_rotation["euler"][2]
+    def getAngleVector(self,format="euler"):
+        self.computeRotations()
 
-        return angles
+        if format.lower() == "euler":
+            angles = np.zeros(19)
+            angles[0] = self.pelvis_rotation["euler"][1]
+            angles[1] = self.torso_rotation["euler"][0]
+            angles[2] = self.torso_rotation["euler"][2]
+            angles[3] = self.left_shoulder_rotation["euler"][0]
+            angles[4] = self.left_shoulder_rotation["euler"][1]
+            angles[5] = self.left_shoulder_rotation["euler"][2]
+            angles[6] = self.right_shoulder_rotation["euler"][0]
+            angles[7] = self.right_shoulder_rotation["euler"][1]
+            angles[8] = self.right_shoulder_rotation["euler"][2]
+            angles[9] = self.left_elbow_rotation["euler"][2]
+            angles[10] = self.right_elbow_rotation["euler"][2]
+            angles[11] = self.left_hip_rotation["euler"][0]
+            angles[12] = self.left_hip_rotation["euler"][2]
+            angles[13] = self.right_hip_rotation["euler"][0]
+            angles[14] = self.right_hip_rotation["euler"][2]
+            angles[15] = self.left_knee_rotation["euler"][0]
+            angles[16] = self.left_knee_rotation["euler"][2]
+            angles[17] = self.right_knee_rotation["euler"][0]
+            angles[18] = self.right_knee_rotation["euler"][2]
+
+            return angles
+        else:
+            angles = np.zeros(40)
+            angles[0:4] = self.pelvis_rotation["local"].as_quat()
+            angles[4:8] = self.torso_rotation["local"].as_quat()
+            angles[8:12] = self.left_shoulder_rotation["local"].as_quat()
+            angles[12:16] = self.right_shoulder_rotation["local"].as_quat()
+            angles[16:20] = self.left_elbow_rotation["local"].as_quat()
+            angles[20:24] = self.right_elbow_rotation["local"].as_quat()
+            angles[24:28] = self.left_hip_rotation["local"].as_quat()
+            angles[28:32] = self.right_hip_rotation["local"].as_quat()
+            angles[32:36] = self.left_knee_rotation["local"].as_quat()
+            angles[36:40] = self.right_knee_rotation["local"].as_quat()
+
+            return angles

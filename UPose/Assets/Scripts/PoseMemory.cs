@@ -39,6 +39,10 @@ public class PoseMemory : MonoBehaviour, MotionTrackingPose
         LeftUpLeg=new Quaternion[BufferSize];
         RightLeg=new Quaternion[BufferSize];
         LeftLeg=new Quaternion[BufferSize];
+        for(int i=0;i<BufferSize;i++){
+            RightUpLeg[i]=Quaternion.Euler(0,0,180);
+            LeftUpLeg[i]=Quaternion.Euler(0,0,180);
+        }
     }
 
     private int i=0;
