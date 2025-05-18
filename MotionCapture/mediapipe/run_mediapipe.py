@@ -47,18 +47,19 @@ with mp_pose.Pose(min_detection_confidence=0.80, min_tracking_confidence=0.5, mo
         if results.pose_world_landmarks:
             #Calculate rotations
             pose_tracker.newFrame(results)
+            pose_tracker.computeRotations();
             pelvis_rotation = pose_tracker.getPelvisRotation()["local"].as_quat()
             pelvis_visibility = pose_tracker.getPelvisRotation()["visibility"]
             torso_rotation = pose_tracker.getTorsoRotation()["local"].as_quat()
             torso_visibility = pose_tracker.getTorsoRotation()["visibility"]
-            left_elbow_rotation = pose_tracker.getLeftElbowRotation()["local"].as_quat()
-            left_elbow_visibility = pose_tracker.getLeftElbowRotation()["visibility"]
-            right_elbow_rotation = pose_tracker.getRightElbowRotation()["local"].as_quat()
-            right_elbow_visibility = pose_tracker.getRightElbowRotation()["visibility"]
             left_shoulder_rotation = pose_tracker.getLeftShoulderRotation()["local"].as_quat()
             left_shoulder_visibility = pose_tracker.getLeftShoulderRotation()["visibility"]
             right_shoulder_rotation = pose_tracker.getRightShoulderRotation()["local"].as_quat()
             right_shoulder_visibility = pose_tracker.getRightShoulderRotation()["visibility"]
+            left_elbow_rotation = pose_tracker.getLeftElbowRotation()["local"].as_quat()
+            left_elbow_visibility = pose_tracker.getLeftElbowRotation()["visibility"]
+            right_elbow_rotation = pose_tracker.getRightElbowRotation()["local"].as_quat()
+            right_elbow_visibility = pose_tracker.getRightElbowRotation()["visibility"]
             left_hip_rotation = pose_tracker.getLeftHipRotation()["local"].as_quat()
             left_hip_visibility = pose_tracker.getLeftHipRotation()["visibility"]
             right_hip_rotation = pose_tracker.getRightHipRotation()["local"].as_quat()

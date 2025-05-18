@@ -33,8 +33,11 @@ public class ReadyPlayerAvatar : MonoBehaviour
 
     private bool AVATAR_LOADED=false;
 
-    public enum AvatarChoice { FemaleGymClothing, FemaleDress,FemaleCasual, MaleCasual, MaleTshirt, MaleArmored, FemaleYogaOutfit}
-    public AvatarChoice avatar;
+    public enum AvatarChoice { UseLocalFile, FemaleGymClothing, FemaleDress,FemaleCasual, MaleCasual, MaleTshirt, MaleArmored, FemaleYogaOutfit}
+    public AvatarChoice onlineAvatar;
+
+    //avatar filename inside the StreamingAssets folder
+    public String localFilename = "67e21d1a79ac9bcf81a46385.glb";
 
     private void Start()
     {
@@ -43,7 +46,7 @@ public class ReadyPlayerAvatar : MonoBehaviour
         if (server == null)
         {
             server = FindFirstObjectByType<MotionTracking>();
-            if(server == null)
+            if (server == null)
             {
                 Debug.LogError("You must have a MotionTracking server in the scene!");
                 return;
@@ -57,8 +60,11 @@ public class ReadyPlayerAvatar : MonoBehaviour
     private async void InitializeAvatar(){
         var gltfImport = new GltfImport();
         String avatar_url="";
-        switch (avatar)
+        switch (onlineAvatar)
         {
+            case AvatarChoice.UseLocalFile:
+                avatar_url = "";
+                break;
             case AvatarChoice.FemaleGymClothing:
                 avatar_url="avatar.glb";
                 break;
@@ -85,7 +91,15 @@ public class ReadyPlayerAvatar : MonoBehaviour
                 break;
         }
 
-        await gltfImport.Load("https://digitalworlds.github.io/UPose/Assets/"+avatar_url);
+        if (avatar_url.Length == 0)
+        {
+            string path = System.IO.Path.Combine(Application.streamingAssetsPath,localFilename);
+            await gltfImport.Load(path);
+        }
+        else
+        {
+            await gltfImport.Load("https://digitalworlds.github.io/UPose/UPose/Assets/StreamingAssets/" + avatar_url);
+        }
         var instantiator = new GameObjectInstantiator(gltfImport,transform);
         var success = await gltfImport.InstantiateMainSceneAsync(instantiator);
         if (success) {
