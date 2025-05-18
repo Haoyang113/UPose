@@ -52,7 +52,7 @@ Use both hands to control a platform to catch the ball into the basket!
 UPose API is simple and easy to use in C# in Unity. Here is a 3-line example that shows how to get a bone rotation from the motion tracker and apply it to an avatar.
 
 ```csharp
-MotionTrackingPose pose = FindFirstObjectByType<MotionTracking>();
+MotionTrackingPose pose = FindFirstObjectByType<UPose>();
 
 //Get right fore arm rotation
 Quaternion rotation=pose.GetRotation(Landmark.LEFT_ELBOW);
