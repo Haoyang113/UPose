@@ -45,7 +45,7 @@ public class ReadyPlayerAvatar : MonoBehaviour
         server = FindFirstObjectByType<PoseMemory>();
         if (server == null)
         {
-            server = FindFirstObjectByType<MotionTracking>();
+            server = FindFirstObjectByType<UPose>();
             if (server == null)
             {
                 Debug.LogError("You must have a MotionTracking server in the scene!");

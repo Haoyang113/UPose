@@ -6,7 +6,7 @@ using UnityEngine.ProBuilder.MeshOperations;
 
 
 [DefaultExecutionOrder(-1)]
-public class MotionTracking : MonoBehaviour, MotionTrackingPose
+public class UPose : MonoBehaviour, MotionTrackingPose
 {
     public string host = "127.0.0.1"; // This machines host.
     public int port = 52733; // Must match the Python side.

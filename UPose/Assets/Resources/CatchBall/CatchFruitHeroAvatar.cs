@@ -8,7 +8,7 @@ using System;
 public class CatchFruitHeroAvatar : MonoBehaviour
 {
 
-    private MotionTracking server;
+    private UPose server;
     public GameObject catchBox;
 
     private Transform Hips;
@@ -35,7 +35,7 @@ public class CatchFruitHeroAvatar : MonoBehaviour
     private void Start()
     {
 
-        server = FindFirstObjectByType<MotionTracking>();
+        server = FindFirstObjectByType<UPose>();
         if (server == null)
         {
             Debug.LogError("You must have a Pipeserver in the scene!");

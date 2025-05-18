@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PoseMemory : MonoBehaviour, MotionTrackingPose
 {
-    private MotionTracking server;
+    private UPose server;
 
     private long previous_frame=0;
     
@@ -23,7 +23,7 @@ public class PoseMemory : MonoBehaviour, MotionTrackingPose
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        server = FindFirstObjectByType<MotionTracking>();
+        server = FindFirstObjectByType<UPose>();
         if (server == null)
         {
             Debug.LogError("You must have a MotionTracking server in the scene!");

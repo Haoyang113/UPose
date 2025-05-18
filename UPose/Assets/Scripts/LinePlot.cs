@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LinePlot : MonoBehaviour
 {
-    private MotionTracking server;
+    private UPose server;
 
     public int NumberOfPoints=61;
     public int PaddingSize=5;
@@ -21,7 +21,7 @@ public class LinePlot : MonoBehaviour
 
     void Start()
     {
-        server = FindFirstObjectByType<MotionTracking>();
+        server = FindFirstObjectByType<UPose>();
         if (server == null)
         {
             Debug.LogError("You must have a Pipeserver in the scene!");
