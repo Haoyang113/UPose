@@ -149,7 +149,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Delay: -100
-  avatar: 3
+  onlineAvatar: 4
+  localFilename: 
 --- !u!4 &215193408
 Transform:
   m_ObjectHideFlags: 0
@@ -502,7 +503,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Delay: -75
-  avatar: 2
+  onlineAvatar: 3
+  localFilename: 
 --- !u!4 &847863681
 Transform:
   m_ObjectHideFlags: 0
@@ -721,7 +723,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Delay: -25
-  avatar: 0
+  onlineAvatar: 1
+  localFilename: 
 --- !u!4 &971699686
 Transform:
   m_ObjectHideFlags: 0
@@ -782,7 +785,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Delay: 0
-  avatar: 4
+  onlineAvatar: 0
+  localFilename: 67e21d1a79ac9bcf81a46385.glb
 --- !u!1 &1679518755
 GameObject:
   m_ObjectHideFlags: 0
@@ -813,7 +817,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Delay: -50
-  avatar: 1
+  onlineAvatar: 2
+  localFilename: 
 --- !u!4 &1679518757
 Transform:
   m_ObjectHideFlags: 0

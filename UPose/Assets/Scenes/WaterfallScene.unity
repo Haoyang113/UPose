@@ -969,7 +969,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Delay: 0
-  avatar: 0
+  onlineAvatar: 1
+  localFilename: 
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0

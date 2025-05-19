@@ -50,7 +50,7 @@ public class CatchFruitHeroAvatar : MonoBehaviour
         var gltfImport = new GltfImport();
         String avatar_url = "";
         avatar_url = "67e21d1a79ac9bcf81a46385.glb";
-        await gltfImport.Load("https://digitalworlds.github.io/UPose/Assets/" + avatar_url);
+        await gltfImport.Load("https://digitalworlds.github.io/UPose/UPose/Assets/StreamingAssets/" + avatar_url);
         var instantiator = new GameObjectInstantiator(gltfImport, transform);
         var success = await gltfImport.InstantiateMainSceneAsync(instantiator);
         if (success)

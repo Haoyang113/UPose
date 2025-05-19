@@ -9563,7 +9563,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31b59419f1fa149d486ae127a3b82df7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  avatar: 0
+  Delay: 0
+  onlineAvatar: 1
+  localFilename: 
 --- !u!114 &1856881087
 MonoBehaviour:
   m_ObjectHideFlags: 0
