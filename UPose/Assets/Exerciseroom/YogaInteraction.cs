@@ -78,7 +78,7 @@ public class YogaInteraction : MonoBehaviour
         {
             Quaternion rotation = avatar.getLeftElbowRotation();
             float angle = Mathf.Abs(rotation.eulerAngles.z);
-            Debug.Log(angle);
+            
             if (!aboveLimit && angle < 270) { aboveLimit = true; counter++;  }
             else if (aboveLimit && angle > 300) { aboveLimit = false; }
 
