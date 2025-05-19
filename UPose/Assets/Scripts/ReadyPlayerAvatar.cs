@@ -4,6 +4,8 @@ using GLTFast;
 using System.Linq;
 using System.Xml.Serialization;
 using System;
+using UnityEngine.UIElements;
+using Unity.VisualScripting;
 
 public class ReadyPlayerAvatar : MonoBehaviour
 {
@@ -38,6 +40,9 @@ public class ReadyPlayerAvatar : MonoBehaviour
 
     //avatar filename inside the StreamingAssets folder
     public String localFilename = "67e21d1a79ac9bcf81a46385.glb";
+
+    public bool moveToFloor = false;
+    public float floorLevel = -1;
 
     private void Start()
     {
@@ -223,33 +228,39 @@ public class ReadyPlayerAvatar : MonoBehaviour
     public Quaternion getLeftHipRotation() { return server.GetRotation(Landmark.LEFT_HIP); }
     public Quaternion getRightElbowRotation() { return server.GetRotation(Landmark.RIGHT_ELBOW); }
     public Quaternion getLeftElbowRotation() { return server.GetRotation(Landmark.LEFT_ELBOW); }
+
+    public void MoveToFloor(float floorY)
+    {
+        Vector3 pos = transform.position;
+        float min = Mathf.Min(LeftFoot.position.y, RightFoot.position.y);
+        transform.position = new Vector3(pos.x, pos.y + (floorY - min), pos.z);
+    }
     private void Update()
     {
-        if(!AVATAR_LOADED || server==null) return;
-       
+        if (!AVATAR_LOADED || server == null) return;
+
         //Get pelvis local rotation and apply it to the avatar
-        Hips.localRotation=server.GetRotation(Landmark.PELVIS,Delay);
+        Hips.localRotation = server.GetRotation(Landmark.PELVIS, Delay);
         //Get torso local rotation and apply it to the avatar
-        Spine.localRotation=server.GetRotation(Landmark.SHOULDER_CENTER,Delay);
+        Spine.localRotation = server.GetRotation(Landmark.SHOULDER_CENTER, Delay);
         //Get right upper arm rotation and apply it to the avatar
-        RightArm.localRotation=Quaternion.Euler(0,0,90)*server.GetRotation(Landmark.RIGHT_SHOULDER,Delay);
+        RightArm.localRotation = Quaternion.Euler(0, 0, 90) * server.GetRotation(Landmark.RIGHT_SHOULDER, Delay);
         //Get left upper arm rotation and apply it to the avatar
-        LeftArm.localRotation=Quaternion.Euler(0,0,-90)*server.GetRotation(Landmark.LEFT_SHOULDER,Delay);
+        LeftArm.localRotation = Quaternion.Euler(0, 0, -90) * server.GetRotation(Landmark.LEFT_SHOULDER, Delay);
         //Get left fore arm rotation and apply it to the avatar
-        LeftForeArm.localRotation=server.GetRotation(Landmark.LEFT_ELBOW,Delay);
+        LeftForeArm.localRotation = server.GetRotation(Landmark.LEFT_ELBOW, Delay);
         //Get right fore arm rotation and apply it to the avatar
-        RightForeArm.localRotation=server.GetRotation(Landmark.RIGHT_ELBOW,Delay);
+        RightForeArm.localRotation = server.GetRotation(Landmark.RIGHT_ELBOW, Delay);
         //Get right thigh arm rotation and apply it to the avatar  
-        RightUpLeg.localRotation=server.GetRotation(Landmark.RIGHT_HIP,Delay);
+        RightUpLeg.localRotation = server.GetRotation(Landmark.RIGHT_HIP, Delay);
         //Get left thigh rotation and apply it to the avatar
-        LeftUpLeg.localRotation=server.GetRotation(Landmark.LEFT_HIP,Delay);
+        LeftUpLeg.localRotation = server.GetRotation(Landmark.LEFT_HIP, Delay);
         //Get left leg rotation and apply it to the avatar
-        LeftLeg.localRotation=server.GetRotation(Landmark.LEFT_KNEE,Delay);
+        LeftLeg.localRotation = server.GetRotation(Landmark.LEFT_KNEE, Delay);
         //Get right leg rotation and apply it to the avatar
-        RightLeg.localRotation=server.GetRotation(Landmark.RIGHT_KNEE,Delay);
+        RightLeg.localRotation = server.GetRotation(Landmark.RIGHT_KNEE, Delay);
 
-
-        //server.MoveToFloor(this,-1);
+        if (moveToFloor) MoveToFloor(floorLevel);
     }
 
 }
