@@ -68,8 +68,9 @@ public class YogaInteraction : MonoBehaviour
         {
             Quaternion rotation = avatar.getRightElbowRotation();
             float angle = Mathf.Abs(rotation.eulerAngles.z);
-            if (!aboveLimit && angle < 230) { aboveLimit = true; counter++; }
-            else if (aboveLimit && angle > 300) { aboveLimit = false; }
+            
+            if (!aboveLimit && angle > 110) { aboveLimit = true; counter++; }
+            else if (aboveLimit && angle < 40) { aboveLimit = false; }
 
             if (counter >= 10) setExercise(ExerciseType.LeftElbowFlexion);
         }
@@ -77,8 +78,8 @@ public class YogaInteraction : MonoBehaviour
         {
             Quaternion rotation = avatar.getLeftElbowRotation();
             float angle = Mathf.Abs(rotation.eulerAngles.z);
-       
-            if (!aboveLimit && angle < 230) { aboveLimit = true; counter++;  }
+            Debug.Log(angle);
+            if (!aboveLimit && angle < 270) { aboveLimit = true; counter++;  }
             else if (aboveLimit && angle > 300) { aboveLimit = false; }
 
             if (counter >= 10) setExercise(ExerciseType.RightHipAbduction);
