@@ -13,6 +13,8 @@ You can use the UPose framework as a setup for your own projects, as an experime
 
 For more info on how UPose calculates joint angles from media pipe world coordinates [read our tutorial](UPose.md).
 
+For direct access to UPose from Python, use [https://pypi.org/project/upose/0.1.0/](https://pypi.org/project/upose/0.1.0/).
+
 ## ✍ Cite as
 If you use this repository in your research please cite as:
 
