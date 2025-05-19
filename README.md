@@ -129,7 +129,7 @@ conda activate mediapipe
 
 Then you can install the dependencies of this project:
 ```
-pip install opencv-python mediapipe
+pip install opencv-python mediapipe upose
 conda deactivate
 ```
 
