@@ -99,9 +99,9 @@ public class CatchFruitHeroAvatar : MonoBehaviour
             colliderHolder.AddComponent<KickForce>();
 
             LeftShoulder = GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "LeftShoulder");
-
+            LeftShoulder.localRotation=Quaternion.Euler(0,0,90);
             LeftArm = GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "LeftArm");
-            LeftArm.localRotation = Quaternion.Euler(0, 0, 0);
+            
             LeftForeArm = GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "LeftForeArm");
 
             LeftHand = GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "LeftHand");
@@ -124,9 +124,9 @@ public class CatchFruitHeroAvatar : MonoBehaviour
             colliderHolder.AddComponent<KickForce>();
 
             RightShoulder = GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "RightShoulder");
-
+            RightShoulder.localRotation=Quaternion.Euler(0,0,-90);
             RightArm = GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "RightArm");
-            RightArm.localRotation = Quaternion.Euler(0, 0, 0);
+            
             RightForeArm = GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "RightForeArm");
 
             RightHand = GetComponentsInChildren<Transform>(true).FirstOrDefault(t => t.name == "RightHand");
@@ -246,9 +246,9 @@ public class CatchFruitHeroAvatar : MonoBehaviour
         //Get torso local rotation and apply it to the avatar
         Spine.localRotation = server.GetRotation(Landmark.SHOULDER_CENTER);
         //Get right upper arm rotation and apply it to the avatar
-        RightShoulder.localRotation = server.GetRotation(Landmark.RIGHT_SHOULDER);
+        RightArm.localRotation = Quaternion.Euler(0, 0, 90) * server.GetRotation(Landmark.RIGHT_SHOULDER);
         //Get left upper arm rotation and apply it to the avatar
-        LeftShoulder.localRotation = server.GetRotation(Landmark.LEFT_SHOULDER);
+        LeftArm.localRotation = Quaternion.Euler(0, 0, -90) * server.GetRotation(Landmark.LEFT_SHOULDER);
         //Get left fore arm rotation and apply it to the avatar
         LeftForeArm.localRotation = server.GetRotation(Landmark.LEFT_ELBOW);
         //Get right fore arm rotation and apply it to the avatar
