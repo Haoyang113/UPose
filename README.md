@@ -11,6 +11,8 @@ You can use the UPose framework as a setup for your own projects, as an experime
 - ⌨️ Real-time data streaming from Python to Unity
 - 🏃 Several interactive demos included
 
+https://github.com/user-attachments/assets/cd0888f9-d602-4b79-b323-9811e9b132ad
+
 For more info on how UPose calculates joint angles from media pipe world coordinates [read our tutorial](UPose.md).
 
 For direct access to UPose from Python, use [https://pypi.org/project/upose/0.1.0/](https://pypi.org/project/upose/0.1.0/).
