@@ -1,3 +1,5 @@
+[![GitHub](https://img.shields.io/badge/GitHub-Repository-black?logo=github)](https://github.com/digitalworlds/UPose)
+
 # <img src="UPose Logo.png" alt="Your Scene Name" width="150"/> UPose - AI motion tracking for Unity
 
 UPose is a Unity resource that utilizes different AI methods for human motion tracking and demonstrates its capabilities in a gallery of sample applications.
@@ -162,3 +164,4 @@ We would like to acknowledge the sources of assets we used in this project:
 - Mountain Stylized Fantasy Environment - Standard Unity Asset Store EULA - https://assetstore.unity.com/packages/3d/environments/landscapes/mountain-stylized-fantasy-environment-307488
 - Grand Stadium v2.0 - Standard Unity Asset Store EULA - https://assetstore.unity.com/packages/3d/environments/urban/grand-stadium-v2-0-254584
 
+[![GitHub](https://img.shields.io/badge/GitHub-Repository-black?logo=github)](https://github.com/digitalworlds/UPose)
