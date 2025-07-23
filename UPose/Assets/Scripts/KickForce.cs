@@ -18,7 +18,7 @@ public class KickForce : MonoBehaviour
             Rigidbody boxRb = collision.gameObject.GetComponent<Rigidbody>();
             if (boxRb != null && footRb != null)
             {
-                float forceAmount = footRb.linearVelocity.magnitude * kickForce;
+                float forceAmount = footRb.velocity.magnitude * kickForce;
 
                 Vector3 kickDirection = collision.contacts[0].point - transform.position;
                 kickDirection = kickDirection.normalized;

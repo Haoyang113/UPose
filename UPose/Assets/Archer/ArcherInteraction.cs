@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using UnityEditor.SpeedTree.Importer;
 using UnityEngine;
 
 public class ArcherInteraction : MonoBehaviour
@@ -22,7 +21,7 @@ public class ArcherInteraction : MonoBehaviour
     public Vector3 object2Scale = new Vector3(1, 1, 1);
 
     Transform stringPosition;
-    float animationY = 0;
+    // float animationY = 0; // 删除了这一行
     bool isAnimated = false;
     Vector3 arrow_direction;
     Vector3 arrow_position;
