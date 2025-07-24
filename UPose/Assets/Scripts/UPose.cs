@@ -422,6 +422,12 @@ public class UPose : MonoBehaviour, MotionTrackingPose
                 }
                 frame_counter += 1;
             }
+            catch (ThreadAbortException)
+            {
+                // 这是正常退出播放模式时发生的，不需要记录为错误
+                Debug.Log("Run loop thread aborted (Normal on stop play).");
+                break; // 确保退出循环
+            }
             catch (EndOfStreamException)
             {
                 Debug.Log("server Disconnected");
